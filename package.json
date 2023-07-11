@@ -1,0 +1,18 @@
+{
+  "name": "avokaido",
+  "version": "1.0.0",
+  "description": "hehe",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord-command-cooldown": "^1.0.9",
+    "discord.js": "^14.11.0",
+    "mongodb": "^5.7.0",
+    "mongoose": "^7.3.2",
+    "ms": "^2.1.3"
+  }
+}
