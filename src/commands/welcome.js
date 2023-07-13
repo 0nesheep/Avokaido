@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const id = require("../id.js")
+const id = require("../id.js");
 
 module.exports = {
     name: "welcome",

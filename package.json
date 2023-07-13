@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.41",
+    "@types/css-font-loading-module": "^0.0.8",
+    "canvas": "^2.11.2",
     "discord-command-cooldown": "^1.0.9",
     "discord.js": "^14.11.0",
     "mongodb": "^5.7.0",
