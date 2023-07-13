@@ -15,7 +15,11 @@ module.exports = {
         const prefix = '!';
         const dailyCooldown = new CommandCooldown('daily', ms('24h'));
 
-        if (!message.content.startsWith(prefix) || message.author.bot || message.author.system || message.guild == null) return;
+        if (!message.content.startsWith(prefix) || 
+            message.author.bot || 
+            message.author.system || 
+            message.guild == null || 
+            message.channel.id == id.veriChannel) return;
 
         const args = message.content.slice(prefix.length).split(/ +/);
         const command = args.shift().toLowerCase(); //single word after 
@@ -81,6 +85,13 @@ module.exports = {
             } else {
                 message.client.commands.get('daily').execute(message, dailyCooldown, image, hehe);
             }
+        } else if (command == 'transfer') {
+            if (currUserData.transferred) {
+                return message.reply("You have already transferred your points!");
+            }
+            const avatar = message.client.users.cache.get(message.author.id).avatar;
+            const identify = `https://cdn.discordapp.com/avatars/${message.author.id}/${avatar}.png?size=24px`
+            message.client.commands.get('transfer').execute(message, identify, image);
         }
         
 

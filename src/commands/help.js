@@ -13,12 +13,8 @@ module.exports = {
             .setFooter({ text: hehe })
             .addFields(
                 { name: '!give ', value: 'Transfer ' + emotes.plum + ' using ``!give <amount> @<username>`` or ``!give @<username> <amount>``'},
-                { name: '!bal', value: 'Check your balance'},
-                { name: '!level', value: 'Check your level'},
-                { name: '!claim roles', value: 'Claim your level roles! You can claim roles at level 3, 10 and 20'},
-                { name: '!leaderboard', value: 'Check out the richest and most active members in the server!'},
-                { name: '!daily', value: 'Pick up some plums!'},
-                { name: '!makeshop', value: "Make a temporary shop using ``!makeshop <price> <slots>`` All payments will be processed automatically"},
+                { name: '!bal', value: 'Check your balance and level'},
+                { name: '!daily', value: 'Pick up some petals!'},
                 { name: '!setname', value: 'add or edit your nickname!'},
                 { name: '!transfer', value: 'Transfer your balance from the points bot to avokaido. You can only do this once!'},
                 

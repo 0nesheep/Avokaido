@@ -18,6 +18,9 @@ module.exports = {
         if (name.length > 20) {
             return message.reply('Your name is too long! Hehe cannot remember :(');
         }
+        if(!name.match(/^[a-z0-9-.,'"!?:() ]+$/i)){
+            return message.reply(`Please only include English characters, numbers, or '.', '-', '()', '!', or '?', ' and " `);
+          }
         try {
             await profileModel.findOneAndUpdate(
                 { userId: message.author.id },

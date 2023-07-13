@@ -30,7 +30,7 @@ module.exports = {
 
     //assign roles
     try {
-        let verified = await member.guild.roles.cache.find(role => role.name === 'verified');
+        let verified = await member.guild.roles.cache.find(role => role.name === `${id.verifiedRole}`);
         await member.roles.add(verified);
         await message.delete();
     } catch(e) {

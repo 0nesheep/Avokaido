@@ -1,7 +1,6 @@
 module.exports = {
     serverId: '1029616702385819679',
-    veriRole: "hmmm",
-    verifiedRole: "Testers!",
+    verifiedRole: "verified",
     modRole: "1047230633950326894",
     veriChannel: "1128593170867949618",
     reactionChannel: "1076391951244480532",

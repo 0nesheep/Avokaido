@@ -35,10 +35,6 @@ module.exports = {
             return message.reply('Invalid amount!');
         }
 
-        if (transferAmount <= 0) {
-            return message.reply("Invalid amount!");
-        }
-
         try {
             await profileModel.findOneAndUpdate(
                 { userId: target.id },
