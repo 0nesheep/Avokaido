@@ -7,7 +7,7 @@ const profileModel = require("../models/profileSchema.js");
 const { profile } = require('console');
 const { CommandCooldown, msToMinutes } = require('discord-command-cooldown');
 const ms = require('ms');
-
+const db = require('../index.js');
 
 module.exports = {
     name: Events.MessageCreate,
@@ -65,33 +65,52 @@ module.exports = {
                 console.log('Error occurred with help command: ' + error.message);
             }
         } else if (command == 'setname') {
+            try { 
                 message.client.commands.get("setname").execute(message, messageArray);
+            } catch (error) {
+                console.log('Error occurred with setname command: ' + error.message);
+            }
             
-        } else if (command == 'bal') {
-            if (currUserData.nickname == null) {
-                message.reply('Please register with the bot first');
+        } else if (command == 'card') {
+            if (!currUserData || currUserData.nickname == null) {
+                return message.reply('Please register with the bot first by using `!setname <name>`');
             } else {
-                message.client.commands.get("bal").execute(message, target, image, hehe);
+                message.client.commands.get("card").execute(message, target, image, hehe);
             }
         } else if (command =='give') {
-            if (currUserData.nickname == null) {
-                message.reply("Please register with the bot first");
+            if (message.guild == null) {
+                return message.reply("Please do not use this command in dms!")
+            }
+            if (!currUserData || currUserData.nickname == null) {
+                return message.reply('Please register with the bot first by using `!setname <name>`');
             } else {
                 message.client.commands.get("give").execute(message, messageArray, target, image, hehe);
             }
         } else if (command =='daily') {
+            if (message.guild == null) {
+                return message.reply("Please do not use this command in dms!")
+            }
             if (currUserData.nickname == null) {
-                message.reply("Please register with the bot first");
+                return message.reply('Please register with the bot first by using `!setname <name>`');
             } else {
                 message.client.commands.get('daily').execute(message, dailyCooldown, image, hehe);
             }
         } else if (command == 'transfer') {
+            if (message.guild == null) {
+                return message.reply("Please do not use this command in dms!")
+            }
             if (currUserData.transferred) {
                 return message.reply("You have already transferred your points!");
             }
             const avatar = message.client.users.cache.get(message.author.id).avatar;
             const identify = `https://cdn.discordapp.com/avatars/${message.author.id}/${avatar}.png?size=24px`
             message.client.commands.get('transfer').execute(message, identify, image);
+        } else if (command == 'editcard') {
+            if (currUserData.nickname == null) {
+                return message.reply('Please register with the bot first by using `!setname <name>`');
+            }
+            message.client.commands.get('editcard').execute(message, image, hehe);
+            
         }
         
 

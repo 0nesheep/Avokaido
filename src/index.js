@@ -17,11 +17,11 @@ const wait = require('node:timers/promises').setTimeout;
 const { connect } = require('mongoose');
 
 
+
 const emotes = require("./emotes.js");
 const id = require("./id.js");
 const { heheGen } = require('./hehe.js');
 const { token, databaseToken } = require('./config.json');
-
 // Create a new client instance
 const client = new Client({
     intents: [
