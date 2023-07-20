@@ -13,7 +13,7 @@ module.exports = {
             .setFooter({text: hehe});
     
     const levelChannel = await message.client.channels.cache.get(id.levelPing);
-      levelChannel.send({ content: `<@${message.author.id}>`, embeds: [reply] });
+    levelChannel.send({ content: `<@${message.author.id}>`, embeds: [reply] });
   
   }
 

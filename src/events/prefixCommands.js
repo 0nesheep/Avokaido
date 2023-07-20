@@ -17,8 +17,7 @@ module.exports = {
 
         if (!message.content.startsWith(prefix) || 
             message.author.bot || 
-            message.author.system || 
-            message.guild == null || 
+            message.author.system ||
             message.channel.id == id.veriChannel) return;
 
         const args = message.content.slice(prefix.length).split(/ +/);

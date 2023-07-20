@@ -1,10 +1,12 @@
 const achModel = require("./models/achModel.js");
+const profileSchema = require("./models/profileSchema.js");
 const { Image, createCanvas, GlobalFonts } = require('@napi-rs/canvas');
 const { readFile } = require('fs/promises');
 const { generateFib } = require('./fib.js');
-const db = require("./index.js");
+const id = require("./id.js");
 
 async function generateCard (currUserData) {
+    
         GlobalFonts.registerFromPath('./src/Handwriting-regular.otf', 'Handwriting');
 
         let canvas = createCanvas(750, 377);
@@ -112,7 +114,7 @@ async function generateCard (currUserData) {
         }
 
         if (typeof special == 'object') {
-            if (special.special.basePath != undefined) {
+            if (special.special.basePath != undefined && currUserData.ach[special.index]) {
                 const info = special.special;
                 if (info.barPath != undefined) {
                     const barFile = await readFile('./src/images/[ALL]YellowBar.png');
@@ -137,10 +139,6 @@ async function generateCard (currUserData) {
                 }
             }
         }
-        
-
-        
-
 
         context.drawImage(barBImg, 0, 0, canvas.width, canvas.height);
         context.globalCompositeOperation = 'source-atop';
@@ -153,32 +151,9 @@ async function generateCard (currUserData) {
         context.drawImage(petalImg, 0, 0, canvas.width, canvas.height);
         context.drawImage(achPHImg, 0, 0, canvas.width, canvas.height);
 
-        let pos = 0;
-        achArray.forEach(async element => {
-            let badge = new Image();
-            let badgeRef;
-            try {
-                badgeRef = await achModel.findOne(
-                    { index: element }
-                );
-                
-            } catch(e) {
-                console.log('Error getting badge: ' + e.message);
-                return;
-            }
-            console.log(badgeRef.badgePath);
-
-            const badgeFile = await readFile(badgeRef.badgePath);
-            badge.src = badgeFile;
-            
-            context.drawImage(badge, -pos, 0, canvas.width, canvas.height);
-            pos += 32;
-            
-        });
-
         //render style
         if (typeof styleRef === "object") {
-            if (styleRef.style.bgTop.imagePath != undefined) {
+            if (styleRef.style.bgTop.imagePath != undefined && currUserData.ach[styleRef.index]) {
                 const info = styleRef.style;
                 if (info.bgBot.imagePath != undefined) {
                     context.globalCompositeOperation = info.bgBot.blendingMode;
@@ -199,9 +174,56 @@ async function generateCard (currUserData) {
             }
         }
 
+        
+
+        let pos = -128;
+        for (let i = 0; i < achArray.length; i++) {
+            let badgeRef;
+            try {
+                badgeRef = await achModel.findOne(
+                    { index: achArray[i] }
+                );
+                
+            } catch(e) {
+                console.log('Error getting badge: ' + e.message);
+                return;
+            }
+            if (!currUserData.ach[achArray[i]]) {
+                continue;
+            }
+            let badge = new Image();
+            badge.onload = function() {
+                context.drawImage(badge, pos, 0, canvas.width, canvas.height);
+                pos += 32;
+            }
+            
+            const badgeFile = await readFile(badgeRef.badgePath);
+            badge.src = badgeFile;
+            
+            
+            
+        };
+
+        if (levelImg) {
+            context.drawImage(levelImg, 0, 0, canvas.width, canvas.height);
+        }
+
+        
+
+        context.font = applyText(canvas, currUserData.nickname);
+        context.fillStyle = nameCol;
+        context.fillText(`${currUserData.nickname}`, nameW, nameH);
+
+        context.font = '35px "Handwriting"';
+        context.fillStyle = "#f9c9ad";
+        context.fillText(`${currUserData.petals}`, 215, 270);
+
+        context.fillStyle = '#ffd47b';
+        context.fillText(`${currUserData.level}`, 170, 190); 
+
         //render foreground
         if (typeof fgRef == 'object') {
-            if (fgRef.fg.fgTop.imagePath != undefined) {
+            if (fgRef.fg.fgTop.imagePath != undefined && currUserData.ach[fgRef.index]) {
                 const info = fgRef.fg;
                 
                 if (info.fgBot.imagePath != undefined) {
@@ -219,25 +241,60 @@ async function generateCard (currUserData) {
                 const fgTop = new Image();
                 fgTop.src = fgTopFile;
                 context.drawImage(fgTop, 0, 0, canvas.width, canvas.height);
-                context.globalCompositeOperation = "source-over"
+                context.globalCompositeOperation = "source-over";
                 
             }
         }
 
-        if (levelImg) {
-            context.drawImage(levelImg, 0, 0, canvas.width, canvas.height);
+        const tempAchArray = currUserData.ach;
+        const rand = Math.random();
+        if (rand < 0.02) {
+            context.drawImage(kaiImg, 0, 0, canvas.width, canvas.height);
+            try {
+                tempAchArray[19] = true;
+                await profileSchema.findOneAndUpdate(
+                    { userId: currUserData.userId },
+                    { $set: { ach: tempAchArray }},
+                );
+                
+            } catch(e) {
+                console.log("Error adding easter kai achievement: " + e.message);
+            }
         }
 
-        context.font = applyText(canvas, currUserData.nickname);
-        context.fillStyle = nameCol;
-        context.fillText(`${currUserData.nickname}`, nameW, nameH);
+        let rand3 = Math.random();
+        if (rand3 < 0.02) {
+            context.drawImage(fishImg, 0, 0, canvas.width, canvas.height);
+            try {
+                tempAchArray[18] = true;
+                await profileSchema.findOneAndUpdate(
+                    { userId: currUserData.userId },
+                    { $set: { ach: tempAchArray }},
+                );
+                
+            } catch(e) {
+                console.log("Error adding easter feesh achievement: " + e.message);
+            }
+        }
 
-        context.font = '35px "Handwriting"';
-        context.fillStyle = "#f9c9ad";
-        context.fillText(`${currUserData.petals}`, 215, 270);
+        let rand2 = Math.random();
+        if (rand2 < 0.02) {
+            const x = Math.floor(Math.random() * 600);
+            const y = Math.floor(Math.random() * 227);
+            context.drawImage(heheImg, x, y, 150, 150);
+            try {
+                tempAchArray[17] = true;
+                await profileSchema.findOneAndUpdate(
+                    { userId: currUserData.userId },
+                    { $set: { ach: tempAchArray }},
+                );
+                
+            } catch(e) {
+                console.log("Error adding easter hehe achievement: " + e.message);
+            }
+        }
 
-        context.fillStyle = '#ffd47b';
-        context.fillText(`${currUserData.level}`, 170, 190); 
+        
 
         return canvas;
 }

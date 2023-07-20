@@ -9,7 +9,7 @@ const profileSchema = new mongoose.Schema({
     level: { type: Number, default: 1 },
     memories: { type: Number, default: 0 },
     transferred: { type: Boolean, default: false },
-    ach: { type: Array, default: [] },
+    ach: { type: Array, default: [true] },
     card: {
         activeAch: { type: Array, default: [] },
         decor: { type: Number, default: 0 },

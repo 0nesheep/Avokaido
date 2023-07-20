@@ -56,6 +56,35 @@ module.exports = {
                         );
 
                         message.client.commands.get('levelPing').execute(message, currLevel + 1, image, hehe);
+                        if (currLevel + 1 >= 3) {
+                            const updateAch = currUserData.ach;
+                            if (!updateAch[12]) {
+                                updateAch[12] = true;
+                                try {
+                                    await profileModel.findOneAndUpdate(
+                                        { userId: message.author.id },
+                                        { $set: {ach: updateAch} },
+                                    )
+                                } catch(e) {
+                                    console.log("Error adding sprout achievement: " + e.message);
+                                }
+                            }
+                        }
+
+                        if (currLevel + 1 >= 10) {
+                            const updateAch = currUserData.ach;
+                            if (!updateAch[13]) {
+                                updateAch[13] = true;
+                                try {
+                                    await profileModel.findOneAndUpdate(
+                                        { userId: message.author.id },
+                                        { $set: {ach: updateAch} },
+                                    )
+                                } catch(e) {
+                                    console.log("Error adding seedling achievement: " + e.message);
+                                }
+                            }
+                        }
                     }
                     
                 } catch (e) {

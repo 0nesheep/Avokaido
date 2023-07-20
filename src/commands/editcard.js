@@ -2,6 +2,7 @@ const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, AttachmentBu
 const profileModel = require("../models/profileSchema.js");
 const achModel = require('../models/achModel.js');
 const { generateCard } = require('../generateCard.js');
+const { checkPing } = require('../checkPing.js');
 
 module.exports = {
     name: 'editcard',
@@ -19,6 +20,10 @@ module.exports = {
             )
         } catch(e) {
             console.log("Error getting currUserData in editcard: " + e.message);
+        }
+
+        if (currUserData.dream == 1) {
+            return message.reply("Please level up to level 2 first!");
         }
 
         const achArray = currUserData.ach;
@@ -57,17 +62,45 @@ module.exports = {
             //responses
             const collector = msg.createMessageComponentCollector();
 
+            const backButton = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('back')
+                        .setLabel('back to menu')
+                        .setStyle(ButtonStyle.Secondary)
+                );
+                
             collector.on('collect', async (interaction) => {
+                await checkPing(message);
+
+                try {
+                    currUserData = await profileModel.findOne(
+                        { userId: message.author.id }
+                    )
+                } catch(e) {
+                    console.log("Error getting currUserData in editcard: " + e.message);
+                }
+
                 //if not button 
                 if (!interaction.isButton()) return;
                 if (interaction.user.id != message.author.id) return;
 
-                if (interaction.customId == 'foreground') {
-                    message.client.commands.get('fgButtonClick').execute(interaction, msg, achArray, attach, image, hehe);
+                if (interaction.customId == 'back') {
+                    interaction.deferUpdate();
+                    try {
+                        const newCanvas = await generateCard(currUserData);
+                        attach = new AttachmentBuilder(await newCanvas.encode('png'), { name: 'card.png' });
+                        msg.edit({ embeds: [menuEmbed], components: [menuButtons], files: [attach] });
+                    } catch(e) {
+                        console.log("Error refreshing card image when back button pressed: " + e.message);
+                    }    
+                } else if (interaction.customId == 'foreground') {
+                    message.client.commands.get('fgButtonClick').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
                 } else if (interaction.customId == 'style') {
-                    message.client.commands.get('bgButtonClick').execute(interaction, msg, achArray, attach, image, hehe);
+                    message.client.commands.get('bgButtonClick').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
+                } else if (interaction.customId == 'badges') {
+                    message.client.commands.get('badgeButton').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
                 }
-
                 if (interaction.customId.startsWith("fg:")) {
                     for (let i = 0; i < achArray.length; i++) {
                         if (interaction.customId == `fg:${i}`) {
@@ -76,16 +109,13 @@ module.exports = {
                                 { userId: message.author.id },
                                 { $set: {'card.fg': i}},
                             )
-                            try {
-                                currUserData = await profileModel.findOne(
-                                    { userId: message.author.id }
-                                )
-                            } catch(e) {
-                                console.log("Error getting currUserData in editcard: " + e.message);
-                            }
+                            currUserData = await profileModel.findOne(
+                                { userId: message.author.id }
+                            )
+                            
                             const newcanvas = await generateCard(currUserData);
                             const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
-                            msg.edit({files: [newattach], embeds:[], components: []});
+                            msg.edit({files: [newattach], embeds:[], components: [backButton]});
                         }
                     }
                 } else if (interaction.customId.startsWith("bg:")) {
@@ -93,22 +123,71 @@ module.exports = {
                     for (let i = 0; i < achArray.length; i++) {
                         if (interaction.customId == `bg:${i}`) {
                             interaction.deferUpdate();
-                            await profileModel.findOneAndUpdate(
-                                { userId: message.author.id },
-                                { $set: {'card.decor': i}},
-                            )
                             try {
+                                await profileModel.findOneAndUpdate(
+                                    { userId: message.author.id },
+                                    { $set: {'card.decor': i}},
+                                )
                                 currUserData = await profileModel.findOne(
                                     { userId: message.author.id }
                                 )
                             } catch(e) {
-                                console.log("Error getting currUserData in editcard: " + e.message);
+                                console.log("Error editing currUserData in editcard: " + e.message);
                             }
                             const newcanvas = await generateCard(currUserData);
                             const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
-                            msg.edit({files: [newattach], embeds:[], components: []});
+                            msg.edit({files: [newattach], embeds:[], components: [backButton]});
                         }
                     }
+                } else if (interaction.customId == "bgCancel") {
+                    interaction.deferUpdate();
+                    try {
+                        await profileModel.findOneAndUpdate(
+                            { userId: message.author.id },
+                            { $set: {'card.decor': 0} },
+                        )
+                        currUserData = await profileModel.findOne(
+                            { userId: message.author.id }
+                        )
+                    } catch(e) {
+                        console.log("Error removing style in editcard: " + e.message);
+                    }
+                    const newcanvas = await generateCard(currUserData);
+                    const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
+                    msg.edit({files: [newattach], embeds:[], components: [backButton]});
+                } else if (interaction.customId == "fgCancel") {
+                    interaction.deferUpdate();
+                    try {
+                        await profileModel.findOneAndUpdate(
+                            { userId: message.author.id },
+                            { $set: {'card.fg': 0} },
+                        )
+                        currUserData = await profileModel.findOne(
+                            { userId: message.author.id }
+                        )
+                    } catch(e) {
+                        console.log("Error removing style in editcard: " + e.message);
+                    }
+                    const newcanvas = await generateCard(currUserData);
+                    const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
+                    msg.edit({files: [newattach], embeds:[], components: [backButton]});
+                } else if (interaction.customId == 'badgeCancel') {
+                    interaction.deferUpdate();
+                    try {
+                        await profileModel.findOneAndUpdate(
+                            { userId: interaction.user.id },
+                            { $set: {'card.activeAch': []} },
+                        )
+                        currUserData = await profileModel.findOne(
+                            { userId: message.author.id }
+                        )
+
+                    } catch(e) {
+                        console.log("Error clearing badges: " + e.message);
+                    }
+                    const newcanvas = await generateCard(currUserData);
+                    const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
+                    msg.edit({files: [newattach], embeds:[], components: [backButton]});
                 }
                 
             });
