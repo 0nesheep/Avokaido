@@ -13,10 +13,11 @@ module.exports = {
             .setFooter({ text: hehe })
             .addFields(
                 { name: '!give ', value: 'Transfer ' + emotes.plum + ' using ``!give <amount> @<username>`` or ``!give @<username> <amount>``'},
-                { name: '!bal', value: 'Check your balance and level'},
+                { name: '!card', value: 'Check your balance and level'},
                 { name: '!daily', value: 'Pick up some petals!'},
                 { name: '!setname', value: 'add or edit your nickname!'},
                 { name: '!transfer', value: 'Transfer your balance from the points bot to avokaido. You can only do this once!'},
+                { name: '!editcard', value: 'Customise your card!'},
                 
             )
 

@@ -31,57 +31,60 @@ module.exports = {
       currUserData = await profileModel.findOne(
         { userId: message.author.id }
       )
-
     } catch(e) {
       console.log("Error fetching user data in transfer: " + e.message);
     }
 
     //past achievements check
+    const tempAchArray = currUserData.ach;
     //2
-    if (message.member.roles.cache.has(id.kyumulus)) {
-    
+    if (tempAchArray && message.member.roles.cache.has(id.kyumulus)) {
+      tempAchArray[2] = true;
     }
 
     //3
-    if (message.member.roles.cache.has(id.hlwn1)) {
-
+    if (tempAchArray && message.member.roles.cache.has(id.hlwn1)) {
+      tempAchArray[3] = true;
     }
 
     //4
-    if (message.member.roles.cache.has(id.dtiys1)) {
-
+    if (tempAchArray && message.member.roles.cache.has(id.dtiys1)) {
+      tempAchArray[4] = true;
     }
 
     //5
-    if (message.member.roles.cache.has(id.xmas1)) {
-
+    if (tempAchArray && message.member.roles.cache.has(id.xmas1)) {
+      tempAchArray[5] = true;
     }
 
     //6
-    if (message.member.roles.cache.has(id.grpPic1)) {
-
+    if (tempAchArray && message.member.roles.cache.has(id.grpPic1)) {
+      tempAchArray[6] = true;
     }
 
     //7
-    if (message.member.roles.cache.has(id.lindel)) {
-
+    if (tempAchArray && message.member.roles.cache.has(id.lindel)) {
+      tempAchArray[7] = true;
     }
 
     //8
-    if (message.member.roles.cache.has(id.box)) {
-      
+    if (tempAchArray && message.member.roles.cache.has(id.box)) {
+      tempAchArray[8] = true;      
     }
+
+    tempAchArray[11] = true;
    
     await profileModel.findOneAndUpdate (
       { userId: message.author.id},
       { 
         $inc: { petals: parseInt(amountArray[0]) },
-        $set: { transferred: true },
+        $set: { transferred: true,
+          ach: tempAchArray },
       }
     )
     
     
-    message.reply("You have transferred your balance! Please check it with the bot again!");
+    message.reply("You have transferred your balance! Use `!card` to check your balance again!");
   }
 
   

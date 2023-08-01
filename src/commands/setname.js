@@ -28,9 +28,24 @@ module.exports = {
                     nickname: name,
                 }}
             )
+
+            let currUserData;
+            currUserData = await profileModel.findOne(
+                { userId: message.author.id }
+            )
+
+            if (currUserData) {
+                const tempAchArray = currUserData.ach;
+                tempAchArray[9] = true;
+                await profileModel.findOneAndUpdate(
+                    { userId: currUserData.userId },
+                    { $set: { ach: tempAchArray }},
+                );
+            }
+            
             return message.reply(`You have set your nickname to ${name}!`);
         } catch(error) {
-            console.log('Error occurred with setName command: ' + e.message);
+            console.log('Error occurred with setName command: ' + error.message);
         }
     }
 }

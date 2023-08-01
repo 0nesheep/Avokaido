@@ -86,10 +86,10 @@ Please reply to this message within 1 minute!`)
                         m.reply("Please only reply the *numbers* corresponding to your badges!");
                         break;
                     } else if (!achArray[badgesA[i]]) {
-                        m.reply(`You do not have achievement ${badgesA[i]}! Please try again`);
+                        m.reply(`You do not have achievement ${badgesA[i]}! Please try again.`);
                         break;
                     } else if (data.includes(badgesA[i])) {
-                        m.reply(`You have entered a duplicate badge number! The duplicate badge is ${badgesA[i]}`);
+                        m.reply(`You have entered a duplicate badge number! The duplicate badge is ${badgesA[i]}.`);
                         break;
                     } else {
                         data.push(badgesA[i]);
@@ -119,7 +119,7 @@ Please reply to this message within 1 minute!`)
                 );
                 
 
-                const newcanvas = await generateCard(currUserData);
+                const newcanvas = await generateCard(currUserData, msg);
                 attach = new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
                 msg.edit({embeds: [badgeEmbed], components: [backButton], files: [attach]});
                 

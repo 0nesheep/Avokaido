@@ -39,6 +39,21 @@ async function checkPing(message) {
             }
         }
     }
+    //10 
+    if (message.member.roles.cache.has(id.starRole)) {
+        if (!currUserData.ach[10]) {
+            try {
+                const updateArray = currUserData.ach;
+                updateArray[10] = true;
+                await profileSchema.findOneAndUpdate(
+                    { userId: message.author.id },
+                    { $set: { ach: updateArray } },
+                )
+            } catch(e) {
+                console.log("Error setting star achievement: " + e.message);
+            }
+        }
+    }
     //16
     if (message.member.roles.cache.has(id.kArtPing) && message.member.roles.cache.has(id.fArtPing)) {
         if (!currUserData.ach[16]) {

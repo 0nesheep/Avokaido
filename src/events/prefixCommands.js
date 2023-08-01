@@ -12,13 +12,17 @@ const db = require('../index.js');
 module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
+        if (message.channel.id != 1135923765906260028) return;
+
+
         const prefix = '!';
         const dailyCooldown = new CommandCooldown('daily', ms('24h'));
 
         if (!message.content.startsWith(prefix) || 
             message.author.bot || 
             message.author.system ||
-            message.channel.id == id.veriChannel) return;
+            message.channel.id == id.veriChannel || 
+            message.guild == null) return;
 
         const args = message.content.slice(prefix.length).split(/ +/);
         const command = args.shift().toLowerCase(); //single word after 

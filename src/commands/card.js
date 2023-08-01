@@ -25,19 +25,21 @@ module.exports = {
             .setColor('e4ee71')
             .setTitle(`**${currUserData.nickname} | ${target}**`)
             .setThumbnail(image)
-            .setDescription(`You have ${currUserData.petals} ${emotes.plum} /n Level up to level 2 to get access to the profile card!`)
+            .setDescription(`You have ${currUserData.petals} ${emotes.plum}
+
+Level up to level 2 to get access to the profile card!`)
             .setFooter({text: hehe})
+        if (currUserData.level == 1) {
+                return message.reply({ embeds: [myEmbed], allowedMentions: { repliedUser: false }});
+        }
                 
-        const canvas = await generateCard(currUserData);
+        const canvas = await generateCard(currUserData, message);
 
         const attach = new AttachmentBuilder(await canvas.encode('png'), { name: 'card.png' });
 
 
-        if (currUserData.level == 1) {
-            message.reply({ embeds: [myEmbed], allowedMentions: { repliedUser: false }});
-        } else {
-            message.reply({ files: [attach],  allowedMentions: { repliedUser: false }});
-        }
-    
+        
+        message.reply({ files: [attach],  allowedMentions: { repliedUser: false }});
+
     }
 }

@@ -113,8 +113,8 @@ client.on('guildMemberAdd', (member) => {
 
 
 
-
 // Log in to Discord with your client's token
+
 client.login(token);
 (async () => {
     try {

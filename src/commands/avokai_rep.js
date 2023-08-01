@@ -6,7 +6,7 @@ module.exports = {
     const replies = ["*jumps*", "Did someone say my name?", "wohoo"];
     const random = Math.floor(Math.random() * replies.length);
     const num = Math.floor(Math.random() * 100);
-    if (num <= 30) {
+    if (num <= 40) {
       message.channel.send(replies[random]);
     }
     

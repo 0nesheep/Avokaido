@@ -1,4 +1,5 @@
-module.exports = {
+//test server
+/*module.exports = {
     serverId: '1029616702385819679',
     verifiedRole: "verified",
     modRole: "1047230633950326894",
@@ -8,7 +9,7 @@ module.exports = {
     levelPing: "1067023465271545856",
     welcomeChannel: "1064195395196031026",
     plumLog: "1082903427052486656",
-    secretAchChannel: "",
+    secretAchChannel: "1029616702884945932",
     patreonRole: "1131638109705085010",
     boosterRole: "1131638160695230524",
     kArtPing: "1131638231172120646",
@@ -20,4 +21,58 @@ module.exports = {
     grpPic1: "1131638447971516446",
     lindel: "1131638493316133065",
     box: "1131638522621735012",
+    starRole: "",
+  }*/
+
+  //testing mode 
+  
+  module.exports = {
+    serverId: '648586540145967147',
+    verifiedRole: "Verified",
+    modRole: "648704988658532352",
+    veriChannel: "1129792089387974787",
+    reactionChannel: "1135923765906260028",
+    permShopChannel: "",
+    levelPing: "1135923765906260028",
+    welcomeChannel: "1135923765906260028",
+    plumLog: "1135923765906260028",
+    secretAchChannel: "1135923765906260028",
+    patreonRole: "1131524439897554985",
+    boosterRole: "711472643605528648",
+    kArtPing: "709382176243974215",
+    fArtPing: "1131515852773130240",
+    kyumulus: "759448229837668353",
+    hlwn1: "897175101294903327",
+    dtiys1: "789025962574086154",
+    xmas1: "789025814610968576",
+    grpPic1: "849971903384649759",
+    lindel: "880087687388876840",
+    box: "1005543320430317618",
+    starRole: "760535643037368410",
   }
+
+  //official server
+  /*module.exports = {
+    serverId: '648586540145967147',
+    verifiedRole: "Verified✔️",
+    modRole: "648704988658532352",
+    veriChannel: "11129792089387974787",
+    reactionChannel: "1135578814605434902",
+    permShopChannel: "",
+    levelPing: "760565253305008168",
+    welcomeChannel: "648703322278330368",
+    plumLog: "1129793963709190204",
+    secretAchChannel: "760565253305008168",
+    patreonRole: "1131524439897554985",
+    boosterRole: "711472643605528648",
+    kArtPing: "709382176243974215",
+    fArtPing: "1131515852773130240",
+    kyumulus: "759448229837668353",
+    hlwn1: "897175101294903327",
+    dtiys1: "789025962574086154",
+    xmas1: "789025814610968576",
+    grpPic1: "849971903384649759",
+    lindel: "880087687388876840",
+    box: "1005543320430317618",
+    starRole: "760535643037368410",
+  }*/

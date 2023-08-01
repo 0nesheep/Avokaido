@@ -5,7 +5,8 @@ const { readFile } = require('fs/promises');
 const { generateFib } = require('./fib.js');
 const id = require("./id.js");
 
-async function generateCard (currUserData) {
+
+async function generateCard (currUserData, message) {
     
         GlobalFonts.registerFromPath('./src/Handwriting-regular.otf', 'Handwriting');
 
@@ -246,16 +247,23 @@ async function generateCard (currUserData) {
             }
         }
 
+        const member = await message.member;
+        const achChannel = await member.guild.channels.cache.get(id.secretAchChannel);
         const tempAchArray = currUserData.ach;
         const rand = Math.random();
         if (rand < 0.02) {
             context.drawImage(kaiImg, 0, 0, canvas.width, canvas.height);
             try {
+                if (!tempAchArray[19]) {
+                    achChannel.send(`<@${currUserData.userId}> You have obtained a secret achievement!
+Use the edit card command to check it out!`);
+                }
                 tempAchArray[19] = true;
                 await profileSchema.findOneAndUpdate(
                     { userId: currUserData.userId },
                     { $set: { ach: tempAchArray }},
                 );
+                
                 
             } catch(e) {
                 console.log("Error adding easter kai achievement: " + e.message);
@@ -266,6 +274,10 @@ async function generateCard (currUserData) {
         if (rand3 < 0.02) {
             context.drawImage(fishImg, 0, 0, canvas.width, canvas.height);
             try {
+                if (!tempAchArray[18]) {
+                    achChannel.send(`<@${currUserData.userId}> You have obtained a secret achievement!
+Use the edit card command to check it out!`);
+                }
                 tempAchArray[18] = true;
                 await profileSchema.findOneAndUpdate(
                     { userId: currUserData.userId },
@@ -283,6 +295,10 @@ async function generateCard (currUserData) {
             const y = Math.floor(Math.random() * 227);
             context.drawImage(heheImg, x, y, 150, 150);
             try {
+                if (!tempAchArray[17]) {
+                    achChannel.send(`<@${currUserData.userId}> You have obtained a secret achievement!
+Use the edit card command to check it out!`);
+                }
                 tempAchArray[17] = true;
                 await profileSchema.findOneAndUpdate(
                     { userId: currUserData.userId },

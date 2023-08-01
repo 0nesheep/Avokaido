@@ -12,6 +12,9 @@ const ms = require('ms');
 module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
+        if (message.channel.id != 1135923765906260028) return;
+
+
         if ( message.author.bot || message.author.system || message.guild == null ) return;
 
         //image generator

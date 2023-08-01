@@ -10,7 +10,7 @@ module.exports = {
 
         const msg = message.content.toLowerCase();
         
-        if (msg == "hehe " + min) {
+        if (msg == "hehe" /*+ min*/) {
             message.client.commands.get('welcome').execute(message, image, hehe);
             message.reply("successfully verified!")
                 .then(msg => {

@@ -22,7 +22,7 @@ module.exports = {
             console.log("Error getting currUserData in editcard: " + e.message);
         }
 
-        if (currUserData.dream == 1) {
+        if (currUserData.level == 1) {
             return message.reply("Please level up to level 2 first!");
         }
 
@@ -56,7 +56,7 @@ module.exports = {
             )
 
             
-            const canvas = await generateCard(currUserData);
+            const canvas = await generateCard(currUserData, message);
             let attach = new AttachmentBuilder(await canvas.encode('png'), { name: 'card.png' });
             let msg = await message.reply({ embeds: [menuEmbed], components: [menuButtons], files: [attach] });
             //responses
@@ -88,7 +88,7 @@ module.exports = {
                 if (interaction.customId == 'back') {
                     interaction.deferUpdate();
                     try {
-                        const newCanvas = await generateCard(currUserData);
+                        const newCanvas = await generateCard(currUserData, message);
                         attach = new AttachmentBuilder(await newCanvas.encode('png'), { name: 'card.png' });
                         msg.edit({ embeds: [menuEmbed], components: [menuButtons], files: [attach] });
                     } catch(e) {
@@ -113,7 +113,7 @@ module.exports = {
                                 { userId: message.author.id }
                             )
                             
-                            const newcanvas = await generateCard(currUserData);
+                            const newcanvas = await generateCard(currUserData, message);
                             const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
                             msg.edit({files: [newattach], embeds:[], components: [backButton]});
                         }
@@ -134,7 +134,7 @@ module.exports = {
                             } catch(e) {
                                 console.log("Error editing currUserData in editcard: " + e.message);
                             }
-                            const newcanvas = await generateCard(currUserData);
+                            const newcanvas = await generateCard(currUserData, message);
                             const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
                             msg.edit({files: [newattach], embeds:[], components: [backButton]});
                         }
@@ -152,7 +152,7 @@ module.exports = {
                     } catch(e) {
                         console.log("Error removing style in editcard: " + e.message);
                     }
-                    const newcanvas = await generateCard(currUserData);
+                    const newcanvas = await generateCard(currUserData, message);
                     const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
                     msg.edit({files: [newattach], embeds:[], components: [backButton]});
                 } else if (interaction.customId == "fgCancel") {
@@ -168,7 +168,7 @@ module.exports = {
                     } catch(e) {
                         console.log("Error removing style in editcard: " + e.message);
                     }
-                    const newcanvas = await generateCard(currUserData);
+                    const newcanvas = await generateCard(currUserData, message);
                     const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
                     msg.edit({files: [newattach], embeds:[], components: [backButton]});
                 } else if (interaction.customId == 'badgeCancel') {
@@ -185,7 +185,7 @@ module.exports = {
                     } catch(e) {
                         console.log("Error clearing badges: " + e.message);
                     }
-                    const newcanvas = await generateCard(currUserData);
+                    const newcanvas = await generateCard(currUserData, message);
                     const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
                     msg.edit({files: [newattach], embeds:[], components: [backButton]});
                 }
