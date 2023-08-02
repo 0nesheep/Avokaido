@@ -26,9 +26,10 @@
 
   //testing mode 
   
-  module.exports = {
+  /*module.exports = {
     serverId: '648586540145967147',
     verifiedRole: "Verified",
+    notverified: "648718223130230824",
     modRole: "648704988658532352",
     veriChannel: "1129792089387974787",
     reactionChannel: "1135923765906260028",
@@ -49,14 +50,16 @@
     lindel: "880087687388876840",
     box: "1005543320430317618",
     starRole: "760535643037368410",
-  }
+  }*/
 
   //official server
-  /*module.exports = {
+  module.exports = {
     serverId: '648586540145967147',
-    verifiedRole: "Verified✔️",
+    botChannel: '760565253305008168',
+    verifiedRole: "Verified",
+    notverified: "648718223130230824",
     modRole: "648704988658532352",
-    veriChannel: "11129792089387974787",
+    veriChannel: "1129792089387974787",
     reactionChannel: "1135578814605434902",
     permShopChannel: "",
     levelPing: "760565253305008168",
@@ -75,4 +78,8 @@
     lindel: "880087687388876840",
     box: "1005543320430317618",
     starRole: "760535643037368410",
-  }*/
+    sprout: "1136293391978741792",
+    seedling: "1136293248994914514",
+    growth: "1136293043138482266",
+    flower: "1131521838053347409",
+  }

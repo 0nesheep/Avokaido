@@ -1,6 +1,9 @@
 module.exports = {
     name: 'interaction_rep',
     execute(message) {
+        if (message.content.length >= 100) {
+            return;
+        }
         const actionArray = message.content.split("*");
         const contArray = actionArray[1].split(" ");
 

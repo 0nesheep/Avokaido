@@ -52,7 +52,10 @@ Do check out the Encyclopedia if you need a reference!`                         
             }
             
         }
-        buttonArray.push(currButtons);
+        if (count != 0) {
+            buttonArray.push(currButtons);
+        }
+        
         const clearbg = new ActionRowBuilder();
         clearbg.addComponents(
             new ButtonBuilder()

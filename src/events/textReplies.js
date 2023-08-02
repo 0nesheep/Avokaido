@@ -12,7 +12,7 @@ const ms = require('ms');
 module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
-        if (message.channel.id != 1135923765906260028) return;
+        //if (message.channel.id != 1135923765906260028) return;
 
 
         if (message.author.bot || 
@@ -23,7 +23,7 @@ module.exports = {
         const msg = message.content.toLowerCase();
         const author = message.author.id;
       
-        if (msg.startsWith('*') && msg.endsWith("*")) {
+        if (msg.startsWith('*') && msg.endsWith("*") && (message.channel.id == '648710922768089109' || message.channel.id == '1135923765906260028')) {
             message.client.commands.get('interaction_rep').execute(message);
         } else if (msg.includes('avocado')) {
             message.client.commands.get('avoc_rep').execute(message);
@@ -36,7 +36,7 @@ module.exports = {
           
         } else if (msg.includes('kai')) {
             message.client.commands.get('kai_rep').execute(message);
-        } else if (msg.includes('i am') || msg.includes("i'm") || msg.includes('im')) {
+        } else if (msg.includes('i am') || msg.includes("i'm") || msg.includes('im') && message.channel.id == '648710922768089109') {
             message.client.commands.get('iam_rep').execute(message, msg, author);
           
         } 

@@ -19,7 +19,7 @@ module.exports = {
                 .catch(e => console.log("Error sending successful verification prompt: " + e.message));
         } else {
             try {
-                message.reply("insert wrong verification prompt")
+                message.reply("Wrong code! Please read rules carefully again <:iTSoKAY:1064087424847843398>")
                 .then(msg => {
                     setTimeout(() => msg.delete(), 10000);
                     setTimeout(() => message.delete(), 10000);

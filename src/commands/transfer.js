@@ -10,12 +10,16 @@ module.exports = {
     } 
     
     const repliedTo = await message.channel.messages.fetch(message.reference.messageId);
+    const iconURL = repliedTo.embeds[0].author.iconURL;
+
+    const back = iconURL.split('/avatars/');
+    const targetId = back[1].split('/');
     
     if (repliedTo.author.id != '484395597508509697') {
       return message.reply("Please only reply to the points bot message!");
     }
 
-    if (repliedTo.embeds[0].author.iconURL != identify) {
+    if (targetId[0] != identify) {
       return message.reply("Please only reply to your own message!");
     }
     const amount = repliedTo.embeds[0].fields[0].value;
@@ -33,6 +37,56 @@ module.exports = {
       )
     } catch(e) {
       console.log("Error fetching user data in transfer: " + e.message);
+    }
+
+    //sprout
+    if (message.member.roles.cache.has('648715951545516043')) {
+      try {
+        await profileModel.findOneAndUpdate(
+          { userId: message.author.id },
+          { 
+              $inc: {
+                  petals: 5, 
+              }
+          }
+        );
+      } catch(e) {
+        console.log('Error giving petals for sprout: ' + e.message);
+      }
+    }
+
+    //seedling
+    if (message.member.roles.cache.has('648715743050858537')) {
+      try {
+        await profileModel.findOneAndUpdate(
+          { userId: message.author.id },
+          { 
+              $inc: {
+                  petals: 5, 
+              }
+          }
+        );
+      } catch(e) {
+        console.log('Error giving petals for sprout: ' + e.message);
+      }
+
+    }
+
+    //growth
+    if (message.member.roles.cache.has('649782736239984660')) {
+      try {
+        await profileModel.findOneAndUpdate(
+          { userId: message.author.id },
+          { 
+              $inc: {
+                  petals: 10, 
+              }
+          }
+        );
+      } catch(e) {
+        console.log('Error giving petals for sprout: ' + e.message);
+      }
+
     }
 
     //past achievements check

@@ -12,7 +12,9 @@ const db = require('../index.js');
 module.exports = {
     name: Events.MessageCreate,
     async execute(message) {
-        if (message.channel.id != 1135923765906260028) return;
+        //testing
+        //if (message.channel.id != 1135923765906260028) return;
+        if (message.channel.id != id.botChannel) return;
 
 
         const prefix = '!';
@@ -106,7 +108,7 @@ module.exports = {
                 return message.reply("You have already transferred your points!");
             }
             const avatar = message.client.users.cache.get(message.author.id).avatar;
-            const identify = `https://cdn.discordapp.com/avatars/${message.author.id}/${avatar}.png?size=24px`
+            const identify = message.author.id;
             message.client.commands.get('transfer').execute(message, identify, image);
         } else if (command == 'editcard') {
             if (currUserData.nickname == null) {

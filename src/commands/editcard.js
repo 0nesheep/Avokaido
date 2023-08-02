@@ -95,24 +95,41 @@ module.exports = {
                         console.log("Error refreshing card image when back button pressed: " + e.message);
                     }    
                 } else if (interaction.customId == 'foreground') {
-                    message.client.commands.get('fgButtonClick').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
+                    try {
+                        message.client.commands.get('fgButtonClick').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
+                    } catch(e) {
+                        console.log('Error clicking fg: ' + e.message);
+                    }
                 } else if (interaction.customId == 'style') {
-                    message.client.commands.get('bgButtonClick').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
+                    try {
+                        message.client.commands.get('bgButtonClick').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
+                    } catch(e) {
+                        console.log("Error clicking bg: " + e.message);
+                    }
                 } else if (interaction.customId == 'badges') {
-                    message.client.commands.get('badgeButton').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
+                    try {
+                        message.client.commands.get('badgeButton').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
+                    } catch(e) {
+                        console.log("Error clicking badge: " + e.message);
+                    }
                 }
                 if (interaction.customId.startsWith("fg:")) {
                     for (let i = 0; i < achArray.length; i++) {
                         if (interaction.customId == `fg:${i}`) {
                             interaction.deferUpdate();
-                            await profileModel.findOneAndUpdate(
-                                { userId: message.author.id },
-                                { $set: {'card.fg': i}},
-                            )
-                            currUserData = await profileModel.findOne(
-                                { userId: message.author.id }
-                            )
-                            
+                            try {
+                                await profileModel.findOneAndUpdate(
+                                    { userId: message.author.id },
+                                    { $set: {'card.fg': i}},
+                                )
+                                currUserData = await profileModel.findOne(
+                                    { userId: message.author.id }
+                                )
+                                
+                                
+                            } catch(e) {
+                                console.log("Error editing card fg: " + e.message);
+                            }
                             const newcanvas = await generateCard(currUserData, message);
                             const newattach = await new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
                             msg.edit({files: [newattach], embeds:[], components: [backButton]});
