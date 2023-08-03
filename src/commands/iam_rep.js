@@ -4,7 +4,7 @@ module.exports = {
   description : "wohoo",
   execute(message, msg, author) {
     const num = Math.floor(Math.random() * 100);
-    if (num <= 10) { //change to 5
+    if (num <= 10 && !message.content.includes('<@')) { //change to 5
       
       const messageArray = message.content.split(" ");
       var rep = afterIm(messageArray);

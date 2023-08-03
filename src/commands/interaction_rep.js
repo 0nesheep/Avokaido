@@ -1,7 +1,7 @@
 module.exports = {
     name: 'interaction_rep',
     execute(message) {
-        if (message.content.length >= 100) {
+        if (message.content.length >= 100 || message.content.includes('<@')) {
             return;
         }
         const actionArray = message.content.split("*");
