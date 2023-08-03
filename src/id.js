@@ -1,7 +1,9 @@
 //test server
-/*module.exports = {
+module.exports = {
     serverId: '1029616702385819679',
+    botChannel: '1066407586305425418',
     verifiedRole: "verified",
+    notverified: "648718223130230824",
     modRole: "1047230633950326894",
     veriChannel: "1128593170867949618",
     reactionChannel: "1076391951244480532",
@@ -21,8 +23,13 @@
     grpPic1: "1131638447971516446",
     lindel: "1131638493316133065",
     box: "1131638522621735012",
-    starRole: "",
-  }*/
+    starRole: "1135916628375261235",
+    sprout: "1136602368826413086",
+    seedling: "1136602416628899870",
+    growth: "1136602455531077692",
+    flower: "1136602476410318889",
+    seed: "1136655373315604480",
+  }
 
   //testing mode 
   
@@ -53,7 +60,7 @@
   }*/
 
   //official server
-  module.exports = {
+  /*module.exports = {
     serverId: '648586540145967147',
     botChannel: '760565253305008168',
     verifiedRole: "Verified",
@@ -82,4 +89,5 @@
     seedling: "1136293248994914514",
     growth: "1136293043138482266",
     flower: "1131521838053347409",
-  }
+    seed: "1133431382031478986",
+  }*/

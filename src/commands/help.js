@@ -18,6 +18,7 @@ module.exports = {
                 { name: '!setname', value: 'add or edit your nickname!'},
                 { name: '!transfer', value: 'Transfer your balance from the points bot to avokaido. You can only do this once!'},
                 { name: '!editcard', value: 'Customise your card!'},
+                { name: '!leaderboard', value: 'Check the leaderboard for dream/petals!'}
                 
             )
 

@@ -3,6 +3,7 @@ const emotes = require("../emotes.js");
 const profileModel = require("../models/profileSchema.js");
 const { generateCard } = require('../generateCard.js');
 const { checkPing } = require('../checkPing.js');
+const id = require('../id.js');
 
 
 module.exports = {
@@ -19,6 +20,11 @@ module.exports = {
         }
         if (!currUserData || currUserData.nickname == null) {
             return message.reply("this user has not registered~ check back later!");
+        }
+
+        if (!message.member.roles.cache.has(id.seed)) {
+            let seed = await message.member.guild.roles.cache.find(role => role.id === `${id.seed}`);
+            await message.member.roles.add(seed);
         }
 
         const myEmbed = new EmbedBuilder()

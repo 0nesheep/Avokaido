@@ -1,4 +1,3 @@
-const { profile } = require("console");
 const profileModel = require("../models/profileSchema.js");
 const id = require('../id.js');
 

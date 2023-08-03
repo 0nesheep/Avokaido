@@ -14,7 +14,7 @@ module.exports = {
     async execute(message) {
         //testing
         //if (message.channel.id != 1135923765906260028) return;
-        if (message.channel.id != id.botChannel) return;
+        if (message.channel.id != id.botChannel && message.channel.id != '1135923765906260028') return;
 
 
         const prefix = '!';
@@ -116,6 +116,11 @@ module.exports = {
             }
             message.client.commands.get('editcard').execute(message, image, hehe);
             
+        } else if (command == 'leaderboard') {
+            if (currUserData.nickname == null) {
+                return message.reply('Please register with the bot first by using `!setname <name>`');
+            }
+            message.client.commands.get('leaderboard').execute(message, image, hehe);
         }
         
 
