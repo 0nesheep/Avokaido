@@ -307,7 +307,7 @@ module.exports = {
                                 console.log('Error getting petal leaderboard: ' + e.message);
                             }
                             if (lvlData) {
-                                const newText = lvlData.map((obj, position) => `${position + pos + 1}. **${obj.nickname}**: ${obj.petals} ${emotes.petals}`
+                                const newText = lvlData.map((obj, position) => `${position + pos + 1}. **${obj.nickname}**: ${obj.petals} ${emotes.plum}`
                                 ).join('\n');
 
                                 lbEmbed = new EmbedBuilder()

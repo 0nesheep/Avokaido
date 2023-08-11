@@ -60,9 +60,9 @@ module.exports = {
                         );
 
                         message.client.commands.get('levelPing').execute(message, currLevel + 1, image, hehe);
-                        if (currLevel + 1 >= 3) {
+                        if (currLevel + 1 >= 3 && !currUserData.ach[12]) {
                             //check if already has role and give petals
-                            if (!message.member.roles.cache.has(id.sprout)) {
+                            if (!(await message.member.roles.cache.has(id.sprout))) {
                                 let sprout = await message.member.guild.roles.cache.find(role => role.id === `${id.sprout}`);
                                 await message.member.roles.add(sprout);
                                 try {
@@ -89,10 +89,10 @@ module.exports = {
                             }
                         }
 
-                        if (currLevel + 1 >= 10) {
+                        if (currLevel + 1 >= 10 && !currUserData.ach[13]) {
 
                             //check if already has role and give petals
-                            if (!message.member.roles.cache.has(id.seedling)) {
+                            if (!(await message.member.roles.cache.has(id.seedling))) {
                                 let seedling = await message.member.guild.roles.cache.find(role => role.id === `${id.seedling}`);
                                 await message.member.roles.add(seedling);
                                 try {
@@ -119,10 +119,10 @@ module.exports = {
                             }
                         }
 
-                        if (currLevel + 1 >= 20) {
+                        if (currLevel + 1 >= 20 && !currUserData.ach[14]) {
 
                             //check if already has role and give petals
-                            if (!message.member.roles.cache.has(id.growth)) {
+                            if (!(await message.member.roles.cache.has(id.growth))) {
                                 let growth = await message.member.guild.roles.cache.find(role => role.id === `${id.growth}`);
                                 await message.member.roles.add(growth);
                                 try {
@@ -152,7 +152,7 @@ module.exports = {
                         if (currLevel + 1 >= 30) {
 
                             //check if already has role and give petals
-                            if (!message.member.roles.cache.has(id.flower)) {
+                            if (!(await message.member.roles.cache.has(id.flower))) {
                                 let flower = await message.member.guild.roles.cache.find(role => role.id === `${id.flower}`);
                                 await message.member.roles.add(flower);
                                 try {

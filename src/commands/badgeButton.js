@@ -50,13 +50,13 @@ Please reply the badge number (indicated in []) in the order at which you will l
 Your available badges are: 
 ${availText}
 
-Please reply to this message within 1 minute!`)
+Please reply to this message within 3 minutes!`)
             .setFooter({text: hehe});
         
         msg.edit({embeds: [badgeEmbed], components: [clearButton, backButton], file: [attach]});
 
 
-        const collector = msg.channel.createMessageCollector({ time: 60000 })
+        const collector = msg.channel.createMessageCollector({ time: 180000 })
         function check(m) {
             var result = true;
             if (interaction.user.id != m.author.id) {

@@ -19,15 +19,16 @@ module.exports = {
         console.log("Error getting welcome channel: " + e.message)
       }
 
-      
-      const myEmbed = new EmbedBuilder()
-            .setColor('e4ee71')
-            .setTitle(welcomeMessage)
-            .setThumbnail(image)
-            .setDescription('A new ~~sacrifice~~ member! Please welcome them :D')
-            .setFooter({ text: hehe });
-                
-            await welcomeChannel.send({ embeds: [myEmbed], content:`<@${member.id}>`});
+      if (welcomeMessage) {
+        const myEmbed = new EmbedBuilder()
+              .setColor('e4ee71')
+              .setTitle(welcomeMessage)
+              .setThumbnail(image)
+              .setDescription('A new ~~sacrifice~~ member! Please welcome them :D')
+              .setFooter({ text: hehe });
+                  
+              await welcomeChannel.send({ embeds: [myEmbed], content:`<@${member.id}>`});
+      }
 
     //assign roles
     try {

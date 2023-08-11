@@ -135,6 +135,11 @@ module.exports = {
             } else {
                 message.client.commands.get("add").execute(message, messageArray, target, image, hehe);
             }
+        } else if (command == 'update') {
+            if (!message.member.roles.cache.has(id.modRole)) {
+                return message.reply("You can only use that command if you are a mod!");
+            }
+            message.client.commands.get("update").execute(message);
         }
 
     }
