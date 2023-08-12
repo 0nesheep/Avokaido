@@ -37,7 +37,7 @@ module.exports = {
               .setTitle('**Confirm shop**')
               .setThumbnail(image)
               .setDescription(`Are you sure you want to make a permanent shop with:
-            Price: ${price} ${emotes.petal} and title ${title}`)
+            Price: ${price} ${emotes.plum} and title ${title}`)
               .setFooter({ text: hehe })
       
             const confirmButtons = new ActionRowBuilder()
@@ -82,7 +82,7 @@ module.exports = {
               .setTitle(title)
               .setThumbnail(image)
               .setDescription(`Claim a slot here! The petals will be automatically deducted
-      **Price:** ${price} ${emotes.petal}`)
+      **Price:** ${price} ${emotes.plum}`)
               .addFields(
                 { name: 'Amount sold', value: `${claimed}` },
               )

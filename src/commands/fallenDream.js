@@ -24,13 +24,23 @@ module.exports = {
             try {
                 const tempAch = currUserData.ach;
                 tempAch[21] = true;
-                await profileSchema.findOneAndUpdate (
-                    { userId : message.author.id },
-                    { 
-                        $set: { ach: tempAch },
-                        $inc: { memories: 1, petals: 15 },
-                    }
-                )
+                if (currUserData.memories < 5) {
+                    await profileSchema.findOneAndUpdate (
+                        { userId : message.author.id },
+                        { 
+                            $set: { ach: tempAch },
+                            $inc: { memories: 1, petals: 15 },
+                        }
+                    )
+                } else {
+                    await profileSchema.findOneAndUpdate (
+                        { userId : message.author.id },
+                        { 
+                            $set: { ach: tempAch },
+                            $inc: { petals: 15 },
+                        }
+                    )
+                }
             } catch(e) {
                 console.log(`Error adding petals to FD event to ${message.author.id}: ` + e.message);
                 const currDate = new Date();
@@ -40,8 +50,13 @@ module.exports = {
 
         const gallery = await message.client.channels.cache.get(id.eventRepostChannel);
 
-        const galMsg = await gallery.send({ files: [message.attachments.first()], content: `<@${message.author.id}>`});
-        await galMsg.react(emotes.eventReact);
+        let galMsg
+        try {
+            galMsg = await gallery.send({ files: [message.attachments.first()], content: `<@${message.author.id}>`});
+            await galMsg.react(emotes.eventReact);
+        } catch(e) {
+            console.log("Error reposting entry: " + e.message);
+        }
 
         try {
             await submitSchema.create({

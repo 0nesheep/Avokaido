@@ -148,7 +148,15 @@ async function generateCard (currUserData, message) {
 
         context.drawImage(base, 0, 0, canvas.width, canvas.height);   
         context.drawImage(mem, 0, 0, canvas.width, canvas.height);
-        
+
+        if (currUserData.memories > 0) {
+            //MEMORIES
+            const memory = await readFile(`./src/images/mem${currUserData.memories}.png`);
+            const memoryImg = new Image();
+            memoryImg.src = memory;
+            context.drawImage(memoryImg, 0, 0, canvas.width, canvas.height)
+        }
+                
         context.drawImage(petalImg, 0, 0, canvas.width, canvas.height);
         context.drawImage(achPHImg, 0, 0, canvas.width, canvas.height);
 
