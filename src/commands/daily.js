@@ -21,7 +21,7 @@ module.exports = {
 
         if (userCooldowned) {
             const timeLeft = msToMinutes(userCooldowned.msLeft, false);
-            message.reply(`You've already picked plums today! Please come back in ${timeLeft.hours} hours and ${timeLeft.minutes} minutes!`);
+            message.reply(`You've already picked petals today! Please come back in ${timeLeft.hours} hours and ${timeLeft.minutes + 1} minutes!`);
         } else {
             try {
                 await profileModel.findOneAndUpdate(

@@ -6,15 +6,13 @@ module.exports = {
     description: "sends welcome message and adds role",
   
     async execute (message, image, hehe) {
-      if (message.guild == null) return;
+      if (!message.guild) return;
       //Welcome message
       let welcomeChannel;
       let welcomeMessage;
-      let member;
       try {
-        member = await message.member;
-        welcomeChannel = await member.guild.channels.cache.get(id.welcomeChannel);
-        welcomeMessage = `**Welcome <@${member.id}>!**`;
+        welcomeChannel = await message.guild.channels.cache.get(id.welcomeChannel);
+        welcomeMessage = `**Welcome <@${message.author.id}>!**`;
       } catch(e) {
         console.log("Error getting welcome channel: " + e.message)
       }
@@ -32,13 +30,14 @@ module.exports = {
 
     //assign roles
     try {
-        let verified = await member.guild.roles.cache.find(role => role.name === `${id.verifiedRole}`);
-        let unverified = await member.guild.roles.cache.find(role => role.id === `${id.notverified}`);
-        await member.roles.add(verified);
-        await member.roles.remove(unverified);
+        let verified = await message.guild.roles.cache.find(role => role.name === `${id.verifiedRole}`);
+        let unverified = await message.guild.roles.cache.find(role => role.id === `${id.notverified}`);
+        await message.member.roles.add(verified);
+        await message.member.roles.remove(unverified);
         await message.delete();
     } catch(e) {
-        console.log(`Error assigning verified role to ${message.author}: ` + e.message);
+        const date = new Date();
+        console.log(`Error assigning verified role to ${message.author} at ${date.toString()}: ` + e.message);
     }
       
   

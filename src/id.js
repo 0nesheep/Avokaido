@@ -68,7 +68,7 @@ module.exports = {
     modRole: "648704988658532352",
     veriChannel: "1129792089387974787",
     reactionChannel: "1135578814605434902",
-    permShopChannel: "",
+    permShopChannel: "758252120582651915",
     levelPing: "760565253305008168",
     welcomeChannel: "648703322278330368",
     plumLog: "1129793963709190204",

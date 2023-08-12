@@ -14,7 +14,12 @@ module.exports = {
     async execute(message) {
         //testing
         //if (message.channel.id != 1135923765906260028) return;
-        if (message.channel.id != id.botChannel && message.channel.id != '1135923765906260028') return;
+        if (message.channel.id != id.botChannel && 
+            //bot testing channel
+            message.channel.id != '1135923765906260028' &&
+            //commands channel
+            message.channel.id != '1129793754312757330'
+            ) return;
 
 
         const prefix = '!';
@@ -136,10 +141,24 @@ module.exports = {
                 message.client.commands.get("add").execute(message, messageArray, target, image, hehe);
             }
         } else if (command == 'update') {
+            /*if (!message.member.roles.cache.has(id.modRole)) {
+                return message.reply("You can only use that command if you are a mod!");
+            }
+            message.client.commands.get("update").execute(message);*/
+        } else if (command == 'permashop') {
             if (!message.member.roles.cache.has(id.modRole)) {
                 return message.reply("You can only use that command if you are a mod!");
             }
-            message.client.commands.get("update").execute(message);
+            try {
+                if (message.guild == null) return;
+                
+                const price = parseInt(messageArray[1]);
+                const link = messageArray[2];
+                
+                message.client.commands.get('permashop').execute(message, price, link, image, hehe);
+              } catch (error) {
+                console.log('Error occurred with make permanent shop command', error);
+              }
         }
 
     }
