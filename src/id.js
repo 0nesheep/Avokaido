@@ -29,6 +29,8 @@ module.exports = {
     growth: "1136602455531077692",
     flower: "1136602476410318889",
     seed: "1136655373315604480",
+    eventSubChannel: "1139843196030038076",
+    eventRepostChannel: "1139851776636493906",
   }
 
   //testing mode 
@@ -57,6 +59,8 @@ module.exports = {
     lindel: "880087687388876840",
     box: "1005543320430317618",
     starRole: "760535643037368410",
+    eventSubChannel: "",
+    eventRepostChannel: "",
   }*/
 
   //official server
@@ -90,4 +94,6 @@ module.exports = {
     growth: "1136293043138482266",
     flower: "1131521838053347409",
     seed: "1133431382031478986",
+    eventSubChannel: "1139532679566590033",
+    eventRepostChannel: "1129793394441465877",
   }*/

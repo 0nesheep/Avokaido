@@ -1,4 +1,4 @@
-const { Events, time } = require('discord.js');
+const { Events, time, MessageFlags } = require('discord.js');
 const emotes = require("../emotes.js");
 const id = require("../id.js");
 const { len, imageArray } = require('../thumbnails.js');
@@ -8,6 +8,7 @@ const { profile } = require('console');
 const { CommandCooldown, msToMinutes } = require('discord-command-cooldown');
 const ms = require('ms');
 const db = require('../index.js');
+const events = require('../ongoingEvents.js');
 
 module.exports = {
     name: Events.MessageCreate,
@@ -18,7 +19,8 @@ module.exports = {
             //bot testing channel
             message.channel.id != '1135923765906260028' &&
             //commands channel
-            message.channel.id != '1129793754312757330'
+            message.channel.id != '1129793754312757330' &&
+            message.channel.id != id.eventSubChannel
             ) return;
 
 
@@ -126,6 +128,16 @@ module.exports = {
                 return message.reply('Please register with the bot first by using `!setname <name>`');
             }
             message.client.commands.get('leaderboard').execute(message, image, hehe);
+        } else if (command == 'submit') {
+            if (currUserData.nickname == null) {
+                return message.reply('Please register with the bot first by using `!setname <name>`');
+            }
+
+            const eventName = messageArray[1].toLowerCase();
+            
+            if (messageArray[1] && events.events.includes(eventName)) {
+                message.client.commands.get(`${eventName}`).execute(message);
+            }
         }
         
 
