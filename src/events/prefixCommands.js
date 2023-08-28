@@ -111,12 +111,14 @@ module.exports = {
             if (message.guild == null) {
                 return message.reply("Please do not use this command in dms!")
             }
+            message.reply("This command has been deprecated!")
+            /*
             if (currUserData.transferred) {
                 return message.reply("You have already transferred your points!");
             }
             const avatar = message.client.users.cache.get(message.author.id).avatar;
             const identify = message.author.id;
-            message.client.commands.get('transfer').execute(message, identify, image);
+            message.client.commands.get('transfer').execute(message, identify, image);*/
         } else if (command == 'editcard') {
             if (currUserData.nickname == null) {
                 return message.reply('Please register with the bot first by using `!setname <name>`');
@@ -133,8 +135,16 @@ module.exports = {
                 return message.reply('Please register with the bot first by using `!setname <name>`');
             }
 
-            const eventName = messageArray[1].toLowerCase();
-            
+            let eventName = messageArray[1].toLowerCase();
+            const nameCheck = (currName) => {
+                for (let i = 0; i < events.events.length; i++) {
+                    if (currName.startsWith(events.events[i])) {
+                        eventName = events.events[i].toLowerCase();
+                        break;
+                    }
+                }
+            } 
+            nameCheck(eventName);
             if (messageArray[1] && events.events.includes(eventName)) {
                 message.client.commands.get(`${eventName}`).execute(message);
             }

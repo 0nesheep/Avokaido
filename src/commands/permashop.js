@@ -20,7 +20,7 @@ module.exports = {
           let filter = m => m.author.id === message.author.id && !m.author.bot;
 
 
-        const titleAsk = await message.reply("Please reply with the title of the shop");
+        const titleAsk = await message.reply("Please reply with the message/title of the shop");
 
         const titleCollector = new MessageCollector(titleAsk.channel, {
             filter,
@@ -37,7 +37,7 @@ module.exports = {
               .setTitle('**Confirm shop**')
               .setThumbnail(image)
               .setDescription(`Are you sure you want to make a permanent shop with:
-            Price: ${price} ${emotes.plum} and title ${title}`)
+            Price: ${price} ${emotes.plum}, link ${link}, title/message ${title}`)
               .setFooter({ text: hehe })
       
             const confirmButtons = new ActionRowBuilder()
@@ -64,8 +64,7 @@ module.exports = {
                   .setStyle(ButtonStyle.Danger)
               );
       
-      
-      
+            if (!message.attachments.first()) return;
             const msg = await titleMsg.reply({ components: [confirmButtons], embeds: [confirmMessage] });
       
             
@@ -74,10 +73,9 @@ module.exports = {
             });
       
       
-      
             let claimed = 0;
       
-            const shopEmbed = new EmbedBuilder()
+            /*const shopEmbed = new EmbedBuilder()
               .setColor('e4ee71')
               .setTitle(title)
               .setThumbnail(image)
@@ -86,17 +84,18 @@ module.exports = {
               .addFields(
                 { name: 'Amount sold', value: `${claimed}` },
               )
-              .setFooter({ text: hehe });
+              .setFooter({ text: hehe });*/
       
       
             
             confirmCollector.on('collect', async interaction => {
               if (!interaction.isButton()) return;
+              
               if (interaction.customId == 'confirm') {
                 if (interaction.user.id != message.author.id) return;
-                
+                interaction.deferUpdate();
                 //send to channel
-                const sentMsg = await message.client.channels.cache.get(id.permShopChannel).send({ components: [claimButton], embeds: [shopEmbed] });
+                const sentMsg = await message.client.channels.cache.get(id.permShopChannel).send({ components: [claimButton], files: [message.attachments.first()], content: `[Open] ${title} \n ${claimed} people have claimed this! ` });
       
       
                 try {
@@ -106,6 +105,7 @@ module.exports = {
                         link: link,
                         price: price,
                         claimed: 0,
+                        title: title,
                     })
                 } catch(e) {
                     console.log("Error adding shop to database: " + e.message);
@@ -113,7 +113,7 @@ module.exports = {
       
         
                 
-                interaction.deferUpdate();
+                
                 msg.edit({ content: 'You have successfully created the shop!', embeds: [], components: []});
             } else if (interaction.customId == 'cancel') {
                 if (interaction.user.id != message.author.id) return;
