@@ -11,7 +11,6 @@ module.exports = {
           
         const shopId = interaction.message.id;
         const shopMsg = await interaction.channel.messages.fetch(shopId);
-        const shopEmbed = shopMsg.embeds[0];
             
         const user = interaction.user;
             
@@ -26,14 +25,17 @@ module.exports = {
         const link = currShop.link;
         var claimed = currShop.claimed;
         const claimedUsers = currShop.claimedUsers;
-        const title = shopEmbed.data.title;
+        const title = currShop.title;
             
+        
         try {
-            interaction.deferUpdate();
+            await interaction.deferUpdate();
 
             if (interaction.customId == 'shopClaim') {
+                
+                
                 if (claimedUsers.includes(user.id)) {
-                    return user.send("You have already purchased from the shop! Save some for others >:(");
+                    return await user.send("You have already purchased from the shop! Save some for others >:(");
                 }
                 const currUser = await profileModel.findOne(
                     { userId: user.id }
@@ -68,23 +70,23 @@ module.exports = {
                 );
 
                 claimed = newShopData.claimed;
-                shopEmbed.data.fields[0] = { name: 'Amount sold', value: `${claimed}` }
+                
                 
                     
-                await shopMsg.edit({ embeds: [shopEmbed] });
-                return user.send(`Thank you for purchasing the item from "**${title}**"! Here is the link to the file
+                await shopMsg.edit({ content: `[Open] ${title} \n ${claimed} people have claimed this! `});
+                return await user.send(`Thank you for purchasing the item from "**${title}**"! Here is the link to the file
 ${link}`);
                 
             } else if (interaction.customId == 'shopClose') {
                 if (!interaction.member.roles.cache.has(id.modRole)) {
                     return; //message.reply("You can only use that command if you are a mod!");
                 }
-                shopEmbed.data.description = "This shop has closed!";
-                //interaction.deferUpdate();
-                shopMsg.edit({ embeds: [shopEmbed], components: [] });
+                
+                
+                await shopMsg.edit({ content: `[Closed] ${title} \n ${claimed} people have claimed this! `, components: [] });
                 return;
             }
-        } catch (error) {
+        } catch (e) {
             console.log("Error interacting with shop: " + e.message);
         }
     }

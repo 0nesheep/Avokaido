@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require('discord.js');
 const emotes = require("../emotes.js");
 const profileModel = require("../models/profileSchema.js");
+const id = require("../id.js")
 
 module.exports = {
     name: 'setname',
@@ -41,6 +42,11 @@ module.exports = {
                     { userId: currUserData.userId },
                     { $set: { ach: tempAchArray }},
                 );
+            }
+
+            if (!message.member.roles.cache.has(id.seed)) {
+                let seed = await message.member.guild.roles.cache.find(role => role.id === `${id.seed}`);
+                await message.member.roles.add(seed);
             }
             
             return message.reply(`You have set your nickname to ${name}!`);

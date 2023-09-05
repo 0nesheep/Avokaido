@@ -49,6 +49,7 @@ module.exports = {
         }
 
         const gallery = await message.client.channels.cache.get(id.eventRepostChannel);
+        if (!message.attachments.first()) return;
 
         let galMsg
         try {
