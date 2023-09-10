@@ -6,6 +6,7 @@ const shopSchema = new mongoose.Schema({
     price: { type: Number, require: true, default: 0 },
     claimed: { type: Number, require: true, default: 0 },
     claimedUsers: { type: Array, default: []},
+    title: { type: String, default: ""},
     
 });
 

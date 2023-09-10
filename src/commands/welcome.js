@@ -25,7 +25,7 @@ module.exports = {
               .setDescription('A new ~~sacrifice~~ member! Please welcome them :D')
               .setFooter({ text: hehe });
                   
-              await welcomeChannel.send({ embeds: [myEmbed], content:`<@${member.id}>`});
+              await welcomeChannel.send({ embeds: [myEmbed], content:`<@${message.member.id}>`});
       }
 
     //assign roles

@@ -39,19 +39,25 @@ module.exports = {
         //user has reacted before 
         if (currUserSub.reactions.includes(user.id)) return;
 
+        try {
+            await submitSchema.findOneAndUpdate(
+                { galleryId: messageId },
+                { $push: { reactions: user.id }}
+            )
+        } catch(e) {
+            console.log("Error adding reacted user to db: " + e.message);
+            const currtime = new Date();
+            console.log("current date: " + currtime.toString());
+        }
+
         if ((currUserSub.reactions.length + 1) % 5 == 0) {
             try {
                 await profileModel.findOneAndUpdate(
                     { userId: currUserSub.userId },
                     { $inc: { petals: 1} }
                 )
-
-                await submitSchema.findOneAndUpdate(
-                    { galleryId: messageId },
-                    { $push: { reactions: user.id }}
-                )
             } catch(e) {
-                console.log("Error giving rewards/saving reaction to database: " + e.message);
+                console.log("Error giving rewards: " + e.message);
                 const currDate = new Date();
                 console.log("current time: " + currDate.toString());
             }
