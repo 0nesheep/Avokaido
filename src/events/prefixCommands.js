@@ -181,6 +181,19 @@ module.exports = {
               } catch (error) {
                 console.log('Error occurred with make permanent shop command', error);
               }
+        } else if (command == 'addach' || command == 'addachievement') {
+            if (!message.member.roles.cache.has(id.modRole)) {
+                return message.reply("You can only use that command if you are a mod!");
+            } 
+            try {
+                if (message.guild == null) return;
+
+                message.client.commands.get('addach').execute(message, messageArray, target, image, hehe);
+            } catch(e) {
+                console.log(`Error adding achievement to <@${target}>: `, e.message);
+            }
+
+
         }
 
     }
