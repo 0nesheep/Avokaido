@@ -8,18 +8,18 @@ module.exports = {
     async execute(message, price, link, image, hehe) {
         if (price == undefined || link == undefined) {
             return message.reply("Please enter the price and link!");
-          }
-          if (isNaN(price)) {
-            return message.reply('The first field should be the price!');
-          }
+        }
+        if (isNaN(price)) {
+          return message.reply('The first field should be the price!');
+        }
       
-          if (price < 0) {
-            return message.reply("Please enter a valid amount!");
-          }
+        if (price < 0) {
+          return message.reply("Please enter a valid amount!");
+        }
 
-          let filter = m => m.author.id === message.author.id && !m.author.bot;
-
-
+        let filter = m => m.author.id === message.author.id && !m.author.bot;
+        
+        var title;
         const titleAsk = await message.reply("Please reply with the message/title of the shop");
 
         const titleCollector = new MessageCollector(titleAsk.channel, {
@@ -30,7 +30,7 @@ module.exports = {
 
         titleCollector.on('collect', async (m) => {
             const titleMsg = m;
-            const title = titleMsg.content;
+            title = titleMsg.content;
       
             const confirmMessage = new EmbedBuilder()
               .setColor('e4ee71')
@@ -110,10 +110,7 @@ module.exports = {
                 } catch(e) {
                     console.log("Error adding shop to database: " + e.message);
                 }
-      
-        
-                
-                
+    
                 msg.edit({ content: 'You have successfully created the shop!', embeds: [], components: []});
             } else if (interaction.customId == 'cancel') {
                 if (interaction.user.id != message.author.id) return;

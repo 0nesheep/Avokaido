@@ -32,15 +32,12 @@ module.exports = {
             await interaction.deferUpdate();
 
             if (interaction.customId == 'shopClaim') {
-                
-                
-                if (claimedUsers.includes(user.id)) {
-                    return await user.send("You have already purchased from the shop! Save some for others >:(");
-                }
                 const currUser = await profileModel.findOne(
                     { userId: user.id }
                 )
-                if (!currUser) {
+                if (claimedUsers.includes(user.id)) {
+                    return await user.send("You have already purchased from the shop! Save some for others >:(");
+                } else if (!currUser) {
                     return await user.send("You have not registered! Please register before purchasing from the shops!");
                 }
                 const balanceAmt = currUser.petals;

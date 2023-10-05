@@ -5,17 +5,107 @@ const { readFile } = require('fs/promises');
 const { generateFib } = require('./fib.js');
 const id = require("./id.js");
 
+//const generateSpecial = require("./generateSpecial.js")
+
 
 async function generateCard (currUserData, message) {
+        try {
+            const currUser = await profileSchema.findOne(
+                { userId: message.author.id }
+            )
+            if (currUser && currUser.ach[1]) {
+                if (!message.member.roles.cache.has(id.boosterRole)) {
+                    const currUser = await profileSchema.findOne(
+                        { userId: message.author.id }
+                    )
+                    const updateAch = currUser.ach;
+                    updateAch[1] = false;
+
+                    await profileSchema.findOneAndUpdate(
+                        { userId: message.author.id },
+                        { $set: {ach: updateAch} },
+                    )
+
+                    if (message.member.roles.cache.has(id.boosterColor)) {
+                        await message.member.roles.remove(id.boosterColor)
+                    }
+
+                } else if (message.member.roles.cache.has(id.boosterRole)) {
+                    const currArray = currUser.ach;
+                    currArray[1] = true;
+
+                    await profileSchema.findOneAndUpdate(
+                        { userId: message.author.id },
+                        { $set: {ach: currArray} },
+                    )
+                }
+            
+            } 
+        } catch(e) {
+            console.log("Error checking booster role: " + e.message)
+        }
+
+        try {
+            const currUser = await profileSchema.findOne(
+                { userId: message.author.id }
+            )
+            if (currUser && currUser.ach[20]) {
+                if (!message.member.roles.cache.has(id.patreonRole)) {
+                    const currUser = await profileSchema.findOne(
+                        { userId: message.author.id }
+                    )
+                    const updateAch = currUser.ach;
+                    updateAch[20] = false;
+
+                    await profileSchema.findOneAndUpdate(
+                        { userId: message.author.id },
+                        { $set: {ach: updateAch} },
+                    )
+
+                } else if (message.member.roles.cache.has(id.patreonRole)) {
+                    const currArray = currUser.ach;
+                    currArray[20] = true;
+
+                    await profileSchema.findOneAndUpdate(
+                        { userId: message.author.id },
+                        { $set: {ach: currArray} },
+                    )
+                }
+            
+            } 
+        } catch(e) {
+            console.log("Error checking patreon role: " + e.message)
+        }
+
+        //Start of generate card
     
         GlobalFonts.registerFromPath('./src/Handwriting-regular.otf', 'Handwriting');
 
         let canvas = createCanvas(750, 377);
         let context = canvas.getContext('2d');
 
-        const cardData = currUserData.card;
+        var cardData = currUserData.card;
         let level;
         let levelImg = new Image();
+
+        /*if (cardData.special != 0 && currUserData.ach[cardData.special]) {
+            return generateSpecial(currUserData, cardData.special);
+        } else if (cardData.special != 0) {
+            try {
+                await profileSchema.findOneAndUpdate(
+                    { userId: message.author.id },
+                    { $set: {'card.special': 0} }
+
+                )
+
+                currUserData = profileSchema.findOne(
+                    { userId: message.author.id }
+                )
+                cardData = currUserData.card
+            } catch(e) {
+                console.log("Error updating style for ex-patreon: " + e.message)
+            }
+        }*/
 
         //ALL
         const barB = await readFile('./src/images/[ALL]Backbar.png');
@@ -115,7 +205,9 @@ async function generateCard (currUserData, message) {
         }
 
         if (typeof special == 'object') {
-            if (special.special.basePath != undefined && currUserData.ach[special.index]) {
+            if (special == null) {
+
+            } else if (special.special.basePath != undefined && currUserData.ach[special.index]) {
                 const info = special.special;
                 if (info.barPath != undefined) {
                     const barFile = await readFile('./src/images/[ALL]YellowBar.png');
@@ -162,7 +254,9 @@ async function generateCard (currUserData, message) {
 
         //render style
         if (typeof styleRef === "object") {
-            if (styleRef.style.bgTop.imagePath != undefined && currUserData.ach[styleRef.index]) {
+            if (styleRef == null) {
+
+            } else if (styleRef.style.bgTop.imagePath != undefined && currUserData.ach[styleRef.index]) {
                 const info = styleRef.style;
                 if (info.bgBot.imagePath != undefined) {
                     context.globalCompositeOperation = info.bgBot.blendingMode;
