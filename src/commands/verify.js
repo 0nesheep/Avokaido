@@ -11,12 +11,13 @@ module.exports = {
         const msg = message.content.toLowerCase();
         
         if (msg == "hehe" /*+ min*/) {
+            const m = message;
             await message.reply("successfully verified!")
                 .then(msg => {
+                    m.client.commands.get('welcome').execute(message, m.author.id, image, hehe);
                     setTimeout(() => msg.delete(), 10000);
                 })
                 .catch(e => console.log("Error sending successful verification prompt: " + e.message));
-            await message.client.commands.get('welcome').execute(message, image, hehe);
         } else {
             try {
                 message.reply("Wrong code! Please read rules carefully again <:iTSoKAY:1064087424847843398>")

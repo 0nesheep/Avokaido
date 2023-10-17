@@ -70,21 +70,20 @@ module.exports = {
                 
                 
                     
-                await shopMsg.edit({ content: `[Open] ${title} \n ${claimed} people have claimed this! `});
-                return await user.send(`Thank you for purchasing the item from "**${title}**"! Here is the link to the file
-${link}`);
+                await shopMsg.edit({ content: `[Open] ${title}\n\n### ${claimed} people have claimed this! `});
+                return await user.send({content: `${title}\n\nHere is the link to the file\n${link}`, files: ['./src/images/thank_you.png']});
                 
             } else if (interaction.customId == 'shopClose') {
-                if (!interaction.member.roles.cache.has(id.modRole)) {
+                if (!interaction.member.roles.cache.has('648704466614353930') || !interaction.member.roles.cache.has("649480335498805249")) {
                     return; //message.reply("You can only use that command if you are a mod!");
                 }
                 
                 
-                await shopMsg.edit({ content: `[Closed] ${title} \n ${claimed} people have claimed this! `, components: [] });
+                await shopMsg.edit({ content: `[Closed] ${title}\n\n### ${claimed} people have claimed this! `, components: [] });
                 return;
             }
         } catch (e) {
-            console.log("Error interacting with shop: " + e.message);
+            console.log(`Error interacting with shop for user ${user.id}: ` + e.message);
         }
     }
 

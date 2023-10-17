@@ -29,7 +29,7 @@ module.exports = {
                         { userId : message.author.id },
                         { 
                             $set: { ach: tempAch },
-                            $inc: { memories: 1, petals: 15 },
+                            $inc: { memories: 1 },
                         }
                     )
                 } else {
@@ -37,7 +37,7 @@ module.exports = {
                         { userId : message.author.id },
                         { 
                             $set: { ach: tempAch },
-                            $inc: { petals: 15 },
+                            $inc: { petals: 0 },
                         }
                     )
                 }
@@ -53,7 +53,7 @@ module.exports = {
 
         let galMsg
         try {
-            galMsg = await gallery.send({ files: [message.attachments.first()], content: `<@${message.author.id}>`});
+            galMsg = await gallery.send({ files: [message.attachments.first()], content: `By <@${message.author.id}>`});
             await galMsg.react(emotes.eventReact);
         } catch(e) {
             console.log("Error reposting entry: " + e.message);

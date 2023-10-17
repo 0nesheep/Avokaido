@@ -5,14 +5,14 @@ module.exports = {
     name: "welcome",
     description: "sends welcome message and adds role",
   
-    async execute (message, image, hehe) {
+    async execute(message, authorId, image, hehe) {
       if (!message.guild) return;
       //Welcome message
       let welcomeChannel;
       let welcomeMessage;
       try {
         welcomeChannel = await message.guild.channels.cache.get(id.welcomeChannel);
-        welcomeMessage = `**Welcome <@${message.author.id}>!**`;
+        welcomeMessage = `**Welcome <@${authorId}>!**`;
       } catch(e) {
         console.log("Error getting welcome channel: " + e.message)
       }
