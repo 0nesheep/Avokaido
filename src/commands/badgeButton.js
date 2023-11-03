@@ -79,7 +79,7 @@ Please reply to this message within 3 minutes!`)
             let data = [];
             let updateData;
             if (check(m)) {
-                let badgesA = m.content.split(" ");
+                let badgesA = m.content.split(/\s+/);
                 for (let i = 0; i < 5 && i < badgesA.length; i++) {
                     badgesA[i] = Number(badgesA[i]);
                     if (isNaN(badgesA[i])) {
@@ -117,6 +117,7 @@ Please reply to this message within 3 minutes!`)
                 let currUserData = await profileModel.findOne(
                     { userId: interaction.user.id },
                 );
+                console.log(currUserData)
                 
 
                 const newcanvas = await generateCard(currUserData, msg);
