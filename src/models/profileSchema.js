@@ -15,6 +15,7 @@ const profileSchema = new mongoose.Schema({
         decor: { type: Number, default: 0 },
         fg: { type: Number, default: 0 },
         special: { type: Number, default: 0 },  
+        specDec: { type: Number, default: -1 }
     },
 });
 

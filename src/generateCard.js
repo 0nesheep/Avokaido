@@ -5,7 +5,8 @@ const { readFile } = require('fs/promises');
 const { generateFib } = require('./fib.js');
 const id = require("./id.js");
 
-//const generateSpecial = require("./generateSpecial.js")
+const { generateSpecial } = require("./generateSpecial.js");
+const { profile } = require("console");
 
 
 async function generateCard (currUserData, message) {
@@ -33,7 +34,7 @@ async function generateCard (currUserData, message) {
                 } else if (message.member.roles.cache.has(id.boosterRole)) {
                     const currArray = currUser.ach;
                     currArray[1] = true;
-
+                    
                     await profileSchema.findOneAndUpdate(
                         { userId: message.author.id },
                         { $set: {ach: currArray} },
@@ -45,7 +46,7 @@ async function generateCard (currUserData, message) {
             console.log("Error checking booster role: " + e.message)
         }
 
-        try {
+        /*try {
             const currUser = await profileSchema.findOne(
                 { userId: message.author.id }
             )
@@ -61,21 +62,26 @@ async function generateCard (currUserData, message) {
                         { userId: message.author.id },
                         { $set: {ach: updateAch} },
                     )
-
-                } else if (message.member.roles.cache.has(id.patreonRole)) {
-                    const currArray = currUser.ach;
-                    currArray[20] = true;
-
-                    await profileSchema.findOneAndUpdate(
-                        { userId: message.author.id },
-                        { $set: {ach: currArray} },
-                    )
                 }
+
+            } else if (currUser && message.member.roles.cache.has(id.patreonRole)) {
+                const currArray = currUser.ach;
+                currArray[20] = true;
+
+                await profileSchema.findOneAndUpdate(
+                    { userId: message.author.id },
+                    { $set: {ach: currArray} },
+                )
+            }
             
-            } 
         } catch(e) {
             console.log("Error checking patreon role: " + e.message)
         }
+
+        currUserData = await profileSchema.findOne(
+            { userId: message.author.id }
+        );
+        console.log(message.author.id + " " + currUserData)*/
 
         //Start of generate card
     
@@ -88,8 +94,8 @@ async function generateCard (currUserData, message) {
         let level;
         let levelImg = new Image();
 
-        /*if (cardData.special != 0 && currUserData.ach[cardData.special]) {
-            return generateSpecial(currUserData, cardData.special);
+        if (cardData.special != 0 && currUserData.ach[cardData.special]) {
+            return generateSpecial(message, currUserData, cardData.special);
         } else if (cardData.special != 0) {
             try {
                 await profileSchema.findOneAndUpdate(
@@ -98,14 +104,13 @@ async function generateCard (currUserData, message) {
 
                 )
 
-                currUserData = profileSchema.findOne(
+                currUserData = await profileSchema.findOne(
                     { userId: message.author.id }
                 )
-                cardData = currUserData.card
             } catch(e) {
                 console.log("Error updating style for ex-patreon: " + e.message)
             }
-        }*/
+        }
 
         //ALL
         const barB = await readFile('./src/images/[ALL]Backbar.png');
@@ -204,34 +209,22 @@ async function generateCard (currUserData, message) {
             return;
         }
 
-        if (typeof special == 'object') {
-            if (special == null) {
+        const barFile = await readFile('./src/images/[ALL]YellowBar.png');
+        bar.src = barFile;
 
-            } else if (special.special.basePath != undefined && currUserData.ach[special.index]) {
-                const info = special.special;
-                if (info.barPath != undefined) {
-                    const barFile = await readFile('./src/images/[ALL]YellowBar.png');
-                    bar.src = barFile;
-                }
-                if (info.basePath != undefined) {
-                    const baseFile = await readFile(info.basePath);
-                    base.src = baseFile;  
-                }
+        let baseRef;
 
-                if (info.memoryPath != undefined) {
-                    const memFile = await readFile(info.memoryPath);
-                    mem.src = memFile;
-                }
-
-                if (info.nameCol != undefined) {
-                    nameCol = info.nameColor;
-                }
-                if (info.namePos != undefined) {
-                    nameW = info.namePos[0];
-                    nameH = info.namePos[1];
-                }
-            }
+        try {
+            baseRef = await achModel.findOne(
+                { index: cardData.decor }
+            )
+        } catch(e) {
+            console.log("Error when retrieving base path: " + e.message);
         }
+
+        const baseFile = await readFile(baseRef.base);
+        base.src = baseFile;
+        
 
         context.drawImage(barBImg, 0, 0, canvas.width, canvas.height);
         context.globalCompositeOperation = 'source-atop';
@@ -241,15 +234,6 @@ async function generateCard (currUserData, message) {
         context.drawImage(base, 0, 0, canvas.width, canvas.height);   
         context.drawImage(mem, 0, 0, canvas.width, canvas.height);
 
-        if (currUserData.memories > 0) {
-            //MEMORIES
-            const memory = await readFile(`./src/images/mem${currUserData.memories}.png`);
-            const memoryImg = new Image();
-            memoryImg.src = memory;
-            context.drawImage(memoryImg, 0, 0, canvas.width, canvas.height)
-        }
-                
-        context.drawImage(petalImg, 0, 0, canvas.width, canvas.height);
         context.drawImage(achPHImg, 0, 0, canvas.width, canvas.height);
 
         //render style
@@ -276,8 +260,6 @@ async function generateCard (currUserData, message) {
                 
             }
         }
-
-        
 
         let pos = -128;
         for (let i = 0; i < achArray.length; i++) {
@@ -311,19 +293,16 @@ async function generateCard (currUserData, message) {
             context.drawImage(levelImg, 0, 0, canvas.width, canvas.height);
         }
 
+        context.drawImage(memoryBImg, 0, 0, canvas.width, canvas.height);
         
-
-        context.font = applyText(canvas, currUserData.nickname);
-        context.fillStyle = nameCol;
-        context.fillText(`${currUserData.nickname}`, nameW, nameH);
-
-        context.font = '35px "Handwriting"';
-        context.fillStyle = "#f9c9ad";
-        context.fillText(`${currUserData.petals}`, 215, 270);
-
-        context.fillStyle = '#ffd47b';
-        context.fillText(`${currUserData.level}`, 170, 190); 
-
+        if (currUserData.memories > 0) {
+            //MEMORIES
+            const memory = await readFile(`./src/images/mem${currUserData.memories}.png`);
+            const memoryImg = new Image();
+            memoryImg.src = memory;
+            context.drawImage(memoryImg, 0, 0, canvas.width, canvas.height);
+        }
+        
         //render foreground
         if (typeof fgRef == 'object') {
             if (fgRef.fg.fgTop.imagePath != undefined && currUserData.ach[fgRef.index]) {
@@ -371,6 +350,19 @@ Use the edit card command to check it out!`);
                 console.log("Error adding easter kai achievement: " + e.message);
             }
         }
+
+        context.font = applyText(canvas, currUserData.nickname);
+        context.fillStyle = nameCol;
+        context.fillText(`${currUserData.nickname}`, nameW, nameH);
+
+        context.font = '35px "Handwriting"';
+        context.fillStyle = "#f9c9ad";
+        context.fillText(`${currUserData.petals}`, 215, 270);
+
+        context.fillStyle = '#ffd47b';
+        context.fillText(`${currUserData.level}`, 170, 190); 
+
+        context.drawImage(petalImg, 0, 0, canvas.width, canvas.height);
 
         let rand3 = Math.random();
         if (rand3 < 0.02) {
