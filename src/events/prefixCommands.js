@@ -20,7 +20,8 @@ module.exports = {
             message.channel.id != '1135923765906260028' &&
             //commands channel
             message.channel.id != '1129793754312757330' &&
-            message.channel.id != id.eventSubChannel
+            message.channel.id != id.eventSubChannel &&
+            message.channel.id != '1191385916003065998'
             ) return;
 
 
@@ -36,7 +37,7 @@ module.exports = {
         const args = message.content.slice(prefix.length).split(/ +/);
         const command = args.shift().toLowerCase(); //single word after 
 
-        const messageArray = message.content.split(" ");
+        const messageArray = message.content.split(/\s+/);
         const argument = messageArray.slice(1);
         const cmd = messageArray[0];
         
@@ -180,6 +181,20 @@ module.exports = {
                 message.client.commands.get('permashop').execute(message, price, link, image, hehe);
               } catch (error) {
                 console.log('Error occurred with make permanent shop command', error);
+              }
+        } else if (command == 'decorshop') {
+            if (!message.member.roles.cache.has(id.modRole)) {
+                return message.reply("You can only use that command if you are a mod!");
+            }
+            try {
+                if (message.guild == null) return;
+                
+                const price = parseInt(messageArray[1]);
+                const achievement = messageArray[2];
+                
+                message.client.commands.get('decorshop').execute(message, price, achievement, image, hehe);
+              } catch (error) {
+                console.log('Error occurred with make decoration permanent shop command', error);
               }
         } else if (command == 'addach' || command == 'addachievement') {
             if (!message.member.roles.cache.has(id.modRole)) {

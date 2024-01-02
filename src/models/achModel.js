@@ -24,13 +24,7 @@ const achSchema = new mongoose.Schema({
             blendingMode: { type: String, required: false},
         },
     },
-    special: {
-        basePath: { type: String, required: true},
-        memoryPath: { type: String, required: false },
-        nameColor: { type: String, required: false},
-        namePos: { type: Array, required: false},
-        barPath: {type: String, required: false},
-    }
+    base: { type: String, default: null },
 });
 
 
