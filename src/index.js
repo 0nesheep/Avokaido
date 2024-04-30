@@ -76,21 +76,6 @@ for (const file of eventFiles) {
 //prefix
 const prefix = '!';
 
-/////////////////////////////////////////////////////////
-//welcome message////////////////////////////////////////
-client.on('guildMemberAdd', (member) => {
-  //image generate
-  const random = Math.floor(Math.random() * len);
-  const image = imageArray[random];
-  
-  if (member.user.bot) return;
-
-  try {
-    client.commands.get("welcome").execute(member, image, client);
-  } catch (error) {
-    console.log('Error in welcome command: ', error.message);
-  }
-});
 
 
 

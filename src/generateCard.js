@@ -405,6 +405,39 @@ Use the edit card command to check it out!`);
         }
 
         
+        /*if (baseRef.effect != undefined) {
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            // Create a clipping path based on non-transparent pixels
+            context.beginPath();
+            for (let y = 0; y < canvas.height; y++) {
+                for (let x = 0; x < canvas.width; x++) {
+                    const index = (y * canvas.width + x) * 4;
+                    const red = data[index];
+                    const green = data[index + 1];
+                    const blue = data[index + 2];
+                    const alpha = data[index + 3];
+                    
+                    // Check if pixel is not transparent and not black
+                    if (alpha > 0 && (red !== 0 || green !== 0 || blue !== 0)) {
+                        context.rect(x, y, 1, 1); // Draw a 1x1 rectangle for each eligible pixel
+                    }
+                }
+            }
+            context.clip();
+            if (baseRef.effectblend != undefined) {
+                context.globalCompositeOperation = baseRef.effectblend;
+            }
+            const topEffect = await readFile(baseRef.effect);
+            const topEffectImg = new Image();
+            topEffectImg.src = topEffect;
+            context.drawImage(topEffectImg, 0, 0, canvas.width, canvas.height);
+            context.globalCompositeOperation = "source-over";
+            
+        }*/
+
+        
 
         return canvas;
 }

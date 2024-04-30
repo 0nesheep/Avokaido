@@ -25,6 +25,8 @@ const achSchema = new mongoose.Schema({
         },
     },
     base: { type: String, default: null },
+    effect: {type: String, default: null},
+    effectblend: {type: String, default: null},
 });
 
 
