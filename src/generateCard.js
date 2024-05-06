@@ -46,7 +46,7 @@ async function generateCard (currUserData, message) {
             console.log("Error checking booster role: " + e.message)
         }
 
-        /*try {
+        try {
             const currUser = await profileSchema.findOne(
                 { userId: message.author.id }
             )
@@ -81,7 +81,7 @@ async function generateCard (currUserData, message) {
         currUserData = await profileSchema.findOne(
             { userId: message.author.id }
         );
-        console.log(message.author.id + " " + currUserData)*/
+        console.log(message.author.id + " " + currUserData);
 
         //Start of generate card
     
@@ -100,10 +100,10 @@ async function generateCard (currUserData, message) {
             try {
                 await profileSchema.findOneAndUpdate(
                     { userId: message.author.id },
-                    { $set: {'card.special': 0} }
+                    { $set: {'card.special': 0, 
+                        'card.specDec': 0} },
 
                 )
-
                 currUserData = await profileSchema.findOne(
                     { userId: message.author.id }
                 )
@@ -351,6 +351,15 @@ Use the edit card command to check it out!`);
             }
         }
 
+        const feeshCry = await readFile('./src/images/[DECOR]FeeshCry.png');
+        const feeshCryImg = new Image();
+        feeshCryImg.src = feeshCry;
+        const rand1 = Math.random();
+        if (rand1 < 0.02) {
+            context.drawImage(feeshCryImg, 0, 0, canvas.width, canvas.height);
+            message.reply({content: "Feesh spent a lot of effort making cards possible for you...please show her some love!", allowedMentions: { repliedUser: false }});
+        }
+
         context.font = applyText(canvas, currUserData.nickname);
         context.fillStyle = nameCol;
         context.fillText(`${currUserData.nickname}`, nameW, nameH);
@@ -382,6 +391,15 @@ Use the edit card command to check it out!`);
                 console.log("Error adding easter feesh achievement: " + e.message);
             }
         }
+        const heheDrown = await readFile('./src/images/[DECOR]HeheDrown.png');
+        const heheDrownImg = new Image();
+        heheDrownImg.src = heheDrown;
+        const rand4 = Math.random();
+        if (rand4 < 0.02) {
+            context.drawImage(heheDrownImg, 0, 0, canvas.width, canvas.height);
+            message.reply({content: "Hehe..hehe..he..help", allowedMentions: { repliedUser: false }});
+            setTimeout(() => message.reply({content: "Hehe floats away...", allowedMentions: { repliedUser: false }}), 7000);
+        }
 
         let rand2 = Math.random();
         if (rand2 < 0.02) {
@@ -403,39 +421,6 @@ Use the edit card command to check it out!`);
                 console.log("Error adding easter hehe achievement: " + e.message);
             }
         }
-
-        
-        /*if (baseRef.effect != undefined) {
-            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-            const data = imageData.data;
-
-            // Create a clipping path based on non-transparent pixels
-            context.beginPath();
-            for (let y = 0; y < canvas.height; y++) {
-                for (let x = 0; x < canvas.width; x++) {
-                    const index = (y * canvas.width + x) * 4;
-                    const red = data[index];
-                    const green = data[index + 1];
-                    const blue = data[index + 2];
-                    const alpha = data[index + 3];
-                    
-                    // Check if pixel is not transparent and not black
-                    if (alpha > 0 && (red !== 0 || green !== 0 || blue !== 0)) {
-                        context.rect(x, y, 1, 1); // Draw a 1x1 rectangle for each eligible pixel
-                    }
-                }
-            }
-            context.clip();
-            if (baseRef.effectblend != undefined) {
-                context.globalCompositeOperation = baseRef.effectblend;
-            }
-            const topEffect = await readFile(baseRef.effect);
-            const topEffectImg = new Image();
-            topEffectImg.src = topEffect;
-            context.drawImage(topEffectImg, 0, 0, canvas.width, canvas.height);
-            context.globalCompositeOperation = "source-over";
-            
-        }*/
 
         
 
