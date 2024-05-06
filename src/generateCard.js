@@ -6,7 +6,6 @@ const { generateFib } = require('./fib.js');
 const id = require("./id.js");
 
 const { generateSpecial } = require("./generateSpecial.js");
-const { profile } = require("console");
 
 
 async function generateCard (currUserData, message) {

@@ -28,7 +28,7 @@ async function generateAvailText(achArray) {
 
 module.exports = {
     name: "badgeButton",
-    async execute(interaction, msg, achArray, attach, backButton, image, hehe) {
+    async execute(interaction, message, msg, achArray, attach, backButton, image, hehe) {
         interaction.deferUpdate();
 
         const availText = await generateAvailText(achArray);
@@ -120,7 +120,7 @@ Please reply to this message within 3 minutes!`)
                 console.log(currUserData)
                 
 
-                const newcanvas = await generateCard(currUserData, msg);
+                const newcanvas = await generateCard(currUserData, message);
                 attach = new AttachmentBuilder(await newcanvas.encode('png'), { name: 'card.png' });
                 msg.edit({embeds: [badgeEmbed], components: [backButton], files: [attach]});
                 

@@ -146,7 +146,7 @@ module.exports = {
                     }
                 } else if (interaction.customId == 'badges') {
                     try {
-                        message.client.commands.get('badgeButton').execute(interaction, msg, currUserData.ach, attach, backButton, image, hehe);
+                        message.client.commands.get('badgeButton').execute(interaction, message, msg, currUserData.ach, attach, backButton, image, hehe);
                     } catch(e) {
                         console.log("Error clicking badge: " + e.message);
                     }
