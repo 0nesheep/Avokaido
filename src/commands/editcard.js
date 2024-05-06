@@ -66,7 +66,7 @@ module.exports = {
                         .setCustomId('patreon')
                         .setLabel('patreon')
                         .setStyle(ButtonStyle.Primary)
-                        .setEmoji("1067077634313433139")
+                        .setEmoji(id.patreonEmote)
                 )
             }
 

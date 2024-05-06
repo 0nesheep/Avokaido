@@ -32,6 +32,8 @@ module.exports = {
     seed: "1136655373315604480",
     eventSubChannel: "1139843196030038076",
     eventRepostChannel: "1139851776636493906",
+    patreonEmote: "1067077634313433139",
+
   }
 
   //testing mode 
@@ -98,4 +100,5 @@ module.exports = {
     seed: "1133431382031478986",
     eventSubChannel: "1139532679566590033",
     eventRepostChannel: "1129793394441465877",
+    patreonEmote: "1156514047366287360",
   }*/
