@@ -78,7 +78,7 @@ module.exports = {
 
             const myEmbed = new EmbedBuilder()
                 .setColor('e4ee71')
-                .setTitle('**Giving plums**')
+                .setTitle('**Giving petals**')
                 .setThumbnail(image)
                 .setDescription(`You transferred ${transferAmount} ${emotes.plum} to **${target}**! 
 You have ${amountLeft} ${emotes.plum} left`)

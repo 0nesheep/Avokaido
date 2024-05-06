@@ -113,13 +113,6 @@ module.exports = {
                 return message.reply("Please do not use this command in dms!")
             }
             message.reply("This command has been deprecated!")
-            /*
-            if (currUserData.transferred) {
-                return message.reply("You have already transferred your points!");
-            }
-            const avatar = message.client.users.cache.get(message.author.id).avatar;
-            const identify = message.author.id;
-            message.client.commands.get('transfer').execute(message, identify, image);*/
         } else if (command == 'editcard') {
             if (currUserData.nickname == null) {
                 return message.reply('Please register with the bot first by using `!setname <name>`');
@@ -163,11 +156,6 @@ module.exports = {
             } else {
                 message.client.commands.get("add").execute(message, messageArray, target, image, hehe);
             }
-        } else if (command == 'update') {
-            /*if (!message.member.roles.cache.has(id.modRole)) {
-                return message.reply("You can only use that command if you are a mod!");
-            }
-            message.client.commands.get("update").execute(message);*/
         } else if (command == 'permashop') {
             if (!message.member.roles.cache.has(id.modRole)) {
                 return message.reply("You can only use that command if you are a mod!");
@@ -207,8 +195,17 @@ module.exports = {
             } catch(e) {
                 console.log(`Error adding achievement to <@${target}>: `, e.message);
             }
-
-
+        } else if (command == "edittitle") {
+            if (!message.member.roles.cache.has(id.modRole)) {
+                return message.reply("You can only use that command if you are a mod!");
+            } 
+            if (message.guild == null) return;
+            try {
+                message.client.commands.get('editTitle').execute(message, messageArray, image, hehe);
+            } catch(e) {
+                console.log("Error editing shop: " + e.message);
+            }
+                
         }
 
     }

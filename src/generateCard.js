@@ -81,7 +81,6 @@ async function generateCard (currUserData, message) {
         currUserData = await profileSchema.findOne(
             { userId: message.author.id }
         );
-        console.log(message.author.id + " " + currUserData);
 
         //Start of generate card
     
