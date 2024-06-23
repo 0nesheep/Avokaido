@@ -124,24 +124,12 @@ module.exports = {
                 return message.reply('Please register with the bot first by using `!setname <name>`');
             }
             message.client.commands.get('leaderboard').execute(message, image, hehe);
-        } else if (command == 'submit') {
+        } else if (command == 'submitlotus') {
             if (currUserData.nickname == null) {
                 return message.reply('Please register with the bot first by using `!setname <name>`');
             }
-
-            let eventName = messageArray[1].toLowerCase();
-            const nameCheck = (currName) => {
-                for (let i = 0; i < events.events.length; i++) {
-                    if (currName.startsWith(events.events[i])) {
-                        eventName = events.events[i].toLowerCase();
-                        break;
-                    }
-                }
-            } 
-            nameCheck(eventName);
-            if (messageArray[1] && events.events.includes(eventName)) {
-                message.client.commands.get(`${eventName}`).execute(message);
-            }
+            message.client.commands.get('artfight').execute(message, target);
+            
         }
         
 

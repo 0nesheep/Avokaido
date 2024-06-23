@@ -8,7 +8,6 @@ module.exports = {
     async execute(reaction, user) {
         if (user.bot) return;
 
-        
         if (reaction.message.channel.id != id.eventRepostChannel) return;
         
         if (reaction.partial) {
