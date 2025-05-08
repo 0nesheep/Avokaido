@@ -1,41 +1,42 @@
-const profileModel = require("../models/profileSchema.js");
+const profileModel = require('../models/profileSchema.js');
 const id = require('../id.js');
 
 module.exports = {
-  name : 'transfer',
+  name: 'transfer',
   async execute(message, identify, image) {
     if (message.reference == undefined) {
-      return message.reply("Please reply to the points bot message!");
-    } 
-    
-    const repliedTo = await message.channel.messages.fetch(message.reference.messageId);
+      return message.reply('Please reply to the points bot message!');
+    }
+
+    const repliedTo = await message.channel.messages.fetch(
+      message.reference.messageId
+    );
     const iconURL = repliedTo.embeds[0].author.iconURL;
 
     const back = iconURL.split('/avatars/');
     const targetId = back[1].split('/');
-    
+
     if (repliedTo.author.id != '484395597508509697') {
-      return message.reply("Please only reply to the points bot message!");
+      return message.reply('Please only reply to the points bot message!');
     }
 
     if (targetId[0] != identify) {
-      return message.reply("Please only reply to your own message!");
+      return message.reply('Please only reply to your own message!');
     }
     const amount = repliedTo.embeds[0].fields[0].value;
-    const amountArray = amount.split(" ");
-    
-    const thousandsArray = amountArray[0].split(",");
-    
+    const amountArray = amount.split(' ');
+
+    const thousandsArray = amountArray[0].split(',');
+
     if (thousandsArray.length > 1) {
-      amountArray[0] = parseInt(amountArray[0]) * 1000 + parseInt(thousandsArray[1]);
+      amountArray[0] =
+        parseInt(amountArray[0]) * 1000 + parseInt(thousandsArray[1]);
     }
     let currUserData;
     try {
-      currUserData = await profileModel.findOne(
-        { userId: message.author.id }
-      )
-    } catch(e) {
-      console.log("Error fetching user data in transfer: " + e.message);
+      currUserData = await profileModel.findOne({ userId: message.author.id });
+    } catch (e) {
+      console.log('Error fetching user data in transfer: ' + e.message);
     }
 
     //sprout
@@ -43,13 +44,13 @@ module.exports = {
       try {
         await profileModel.findOneAndUpdate(
           { userId: message.author.id },
-          { 
-              $inc: {
-                  petals: 5, 
-              }
+          {
+            $inc: {
+              petals: 5
+            }
           }
         );
-      } catch(e) {
+      } catch (e) {
         console.log('Error giving petals for sprout: ' + e.message);
       }
     }
@@ -59,16 +60,15 @@ module.exports = {
       try {
         await profileModel.findOneAndUpdate(
           { userId: message.author.id },
-          { 
-              $inc: {
-                  petals: 5, 
-              }
+          {
+            $inc: {
+              petals: 5
+            }
           }
         );
-      } catch(e) {
+      } catch (e) {
         console.log('Error giving petals for sprout: ' + e.message);
       }
-
     }
 
     //growth
@@ -76,16 +76,15 @@ module.exports = {
       try {
         await profileModel.findOneAndUpdate(
           { userId: message.author.id },
-          { 
-              $inc: {
-                  petals: 10, 
-              }
+          {
+            $inc: {
+              petals: 10
+            }
           }
         );
-      } catch(e) {
+      } catch (e) {
         console.log('Error giving petals for sprout: ' + e.message);
       }
-
     }
 
     //past achievements check
@@ -122,23 +121,21 @@ module.exports = {
 
     //8
     if (tempAchArray && message.member.roles.cache.has(id.box)) {
-      tempAchArray[8] = true;      
+      tempAchArray[8] = true;
     }
 
     tempAchArray[11] = true;
-   
-    await profileModel.findOneAndUpdate (
-      { userId: message.author.id},
-      { 
-        $inc: { petals: parseInt(amountArray[0]) },
-        $set: { transferred: true,
-          ach: tempAchArray },
-      }
-    )
-    
-    
-    message.reply("You have transferred your balance! Use `!card` to check your balance again!");
-  }
 
-  
-}
+    await profileModel.findOneAndUpdate(
+      { userId: message.author.id },
+      {
+        $inc: { petals: parseInt(amountArray[0]) },
+        $set: { transferred: true, ach: tempAchArray }
+      }
+    );
+
+    message.reply(
+      'You have transferred your balance! Use `!card` to check your balance again!'
+    );
+  }
+};

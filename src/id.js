@@ -1,44 +1,43 @@
 //test server
 module.exports = {
-    serverId: '1029616702385819679',
-    botChannel: '1066407586305425418',
-    verifiedRole: "verified",
-    notverified: "1076585544227749928",
-    modRole: "1047230633950326894",
-    veriChannel: "1128593170867949618",
-    reactionChannel: "1076391951244480532",
-    permShopChannel: "1083752889610154085",
-    levelPing: "1067023465271545856",
-    welcomeChannel: "1064195395196031026",
-    plumLog: "1082903427052486656",
-    secretAchChannel: "1029616702884945932",
-    patreonRole: "1047230633950326894",
-    boosterRole: "1047230633950326894",
-    boosterColor: "1047230633950326894",
-    kArtPing: "1131638231172120646",
-    fArtPing: "1131638267356389427",
-    kyumulus: "1131638308808704101",
-    hlwn1: "1131638349837389946",
-    dtiys1: "1131638380988473394",
-    xmas1: "1131638414396117012",
-    grpPic1: "1131638447971516446",
-    lindel: "1131638493316133065",
-    box: "1131638522621735012",
-    starRole: "1135916628375261235",
-    sprout: "1136602368826413086",
-    seedling: "1136602416628899870",
-    growth: "1136602455531077692",
-    flower: "1136602476410318889",
-    seed: "1136655373315604480",
-    eventSubChannel: "1139843196030038076",
-    eventRepostChannel: "1066655659048828998",
-    patreonEmote: "1067077634313433139",
+  serverId: '1029616702385819679',
+  botChannel: '1066407586305425418',
+  verifiedRole: 'verified',
+  notverified: '1076585544227749928',
+  modRole: '1047230633950326894',
+  veriChannel: '1128593170867949618',
+  reactionChannel: '1076391951244480532',
+  permShopChannel: '1083752889610154085',
+  levelPing: '1067023465271545856',
+  welcomeChannel: '1064195395196031026',
+  plumLog: '1082903427052486656',
+  secretAchChannel: '1029616702884945932',
+  patreonRole: '1047230633950326894',
+  boosterRole: '1047230633950326894',
+  boosterColor: '1047230633950326894',
+  kArtPing: '1131638231172120646',
+  fArtPing: '1131638267356389427',
+  kyumulus: '1131638308808704101',
+  hlwn1: '1131638349837389946',
+  dtiys1: '1131638380988473394',
+  xmas1: '1131638414396117012',
+  grpPic1: '1131638447971516446',
+  lindel: '1131638493316133065',
+  box: '1131638522621735012',
+  starRole: '1135916628375261235',
+  sprout: '1136602368826413086',
+  seedling: '1136602416628899870',
+  growth: '1136602455531077692',
+  flower: '1136602476410318889',
+  seed: '1136655373315604480',
+  eventSubChannel: '1139843196030038076',
+  eventRepostChannel: '1066655659048828998',
+  patreonEmote: '1067077634313433139'
+};
 
-  }
+//testing mode
 
-  //testing mode 
-  
-  /*module.exports = {
+/*module.exports = {
     serverId: '648586540145967147',
     verifiedRole: "Verified",
     notverified: "648718223130230824",
@@ -66,8 +65,8 @@ module.exports = {
     eventRepostChannel: "1135923765906260028",
   }*/
 
-  //official server
-  /*module.exports = {
+//official server
+/*module.exports = {
     serverId: '648586540145967147',
     botChannel: '760565253305008168',
     verifiedRole: "Verified",

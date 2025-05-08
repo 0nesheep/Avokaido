@@ -1,10 +1,9 @@
 const { EmbedBuilder } = require('discord.js');
-const id = require("../id.js");
+const id = require('../id.js');
 
 module.exports = {
   name: 'levelPing',
   async execute(message, currLevel, image, hehe) {
-
     let text = `<@${message.author.id}>`;
     if (currLevel == 3) {
       text = text + ' You also got the sprout achievement and 5 petals!';
@@ -17,16 +16,15 @@ module.exports = {
     }
 
     const reply = new EmbedBuilder()
-            .setColor('e4ee71')
-            .setTitle('You levelled up!')
-            .setThumbnail(image)
-            .setDescription(`Congrats <@${message.author.id}>! You levelled up to level ${currLevel}!`)
-            .setFooter({text: hehe});
-    
+      .setColor('e4ee71')
+      .setTitle('You levelled up!')
+      .setThumbnail(image)
+      .setDescription(
+        `Congrats <@${message.author.id}>! You levelled up to level ${currLevel}!`
+      )
+      .setFooter({ text: hehe });
+
     const levelChannel = await message.client.channels.cache.get(id.levelPing);
     levelChannel.send({ content: text, embeds: [reply] });
-  
   }
-
-  
-}
+};

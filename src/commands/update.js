@@ -1,47 +1,50 @@
-const profileModel = require("../models/profileSchema.js");
+const profileModel = require('../models/profileSchema.js');
 const id = require('../id.js');
 
 module.exports = {
-    name: 'update',
-    async execute(message) {
-        let allMembers;
-        const seed = message.guild.roles.cache.find(role => role.id === id.seed);
-        const sprout = message.guild.roles.cache.find(role => role.id === id.sprout);
-        const seedling = message.guild.roles.cache.find(role => role.id === id.seedling);
-        let seedCount = 0;
-        let sproutCount = 0;
-        let seedlingCount = 0;
+  name: 'update',
+  async execute(message) {
+    let allMembers;
+    const seed = message.guild.roles.cache.find((role) => role.id === id.seed);
+    const sprout = message.guild.roles.cache.find(
+      (role) => role.id === id.sprout
+    );
+    const seedling = message.guild.roles.cache.find(
+      (role) => role.id === id.seedling
+    );
+    let seedCount = 0;
+    let sproutCount = 0;
+    let seedlingCount = 0;
 
-        //try {
-            allMembers = await profileModel.find({nickname: {$ne: null}});
-            allMembers.forEach(async (current) => {
-                const currUserId = current.userId;
-                const currUser = await message.guild.members.cache.get(currUserId);
+    //try {
+    allMembers = await profileModel.find({ nickname: { $ne: null } });
+    allMembers.forEach(async (current) => {
+      const currUserId = current.userId;
+      const currUser = await message.guild.members.cache.get(currUserId);
 
-                if (current.level >=3) {
-                    try {
-                        await profileModel.findOneAndUpdate(
-                            { userId: currUserId },
-                            { $inc: { petals: -5 }}
-                        )
-                    } catch (e) {
-                        console.log("kill me please");
-                    }
-                }
+      if (current.level >= 3) {
+        try {
+          await profileModel.findOneAndUpdate(
+            { userId: currUserId },
+            { $inc: { petals: -5 } }
+          );
+        } catch (e) {
+          console.log('kill me please');
+        }
+      }
 
-                if (current.level >=10) {
-                    try {
-                        await profileModel.findOneAndUpdate(
-                            { userId: currUserId },
-                            { $inc: { petals: -10 }}
-                        )
-                    } catch (e) {
-                        console.log("kill me please");
-                    }
-                }
+      if (current.level >= 10) {
+        try {
+          await profileModel.findOneAndUpdate(
+            { userId: currUserId },
+            { $inc: { petals: -10 } }
+          );
+        } catch (e) {
+          console.log('kill me please');
+        }
+      }
 
-
-                /*if (current.level >= 3) {
+      /*if (current.level >= 3) {
                     if (!currUser.roles.cache.has(sprout)) {
                         try {
                             await profileModel.findOneAndUpdate(
@@ -103,9 +106,6 @@ module.exports = {
         } catch(e) {
             console.log("Error updating all level rewards: " + e.message)
         }*/
-
-    })
-
-}
-    
-}
+    });
+  }
+};
