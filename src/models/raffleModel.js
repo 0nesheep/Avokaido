@@ -10,7 +10,8 @@ const raffleSchema = new mongoose.Schema({
   title: { type: String, require: true, default: '' },
   price: { type: Number, require: true },
   maxTickets: { type: Number, require: true, default: 0 },
-  users: { type: [userSchema], default: [] }
+  users: { type: [userSchema], default: [] },
+  endTime: { type: Date, require: true },
 });
 
 const model = mongoose.model('raffles', raffleSchema);
