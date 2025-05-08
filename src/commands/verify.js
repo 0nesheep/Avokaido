@@ -1,16 +1,22 @@
 const id = require("../id.js")
+const dayjs = require('dayjs');
 
 module.exports = {
     name: 'verify',
     description: 'verifies user',
     async execute(message, image, hehe) {
         if (message.author.bot) return;
-        const date = new Date();
-        const min = ("0" + date.getMinutes()).slice(-2);
+        const date = dayjs();
 
         const msg = message.content.toLowerCase();
-        
-        if (msg == "hehe" /*+ min*/) {
+        if (dayjs(message.author.createdAt).isAfter(date.subtract(3, 'month'))) {
+            message.reply("You are not eligible to verify! Please come back later.").then(msg => {
+                setTimeout(() => msg.delete(), 10000);
+                setTimeout(() => message.delete(), 10000);
+            })
+            .catch(e => console.log("Error sending unsuccessful verification prompt (account too new): " + e.message));
+
+        } else if (msg == "hehe") {
             const m = message;
             await message.reply("successfully verified!")
                 .then(msg => {

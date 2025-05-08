@@ -31,7 +31,7 @@ module.exports = {
     flower: "1136602476410318889",
     seed: "1136655373315604480",
     eventSubChannel: "1139843196030038076",
-    eventRepostChannel: "1139851776636493906",
+    eventRepostChannel: "1066655659048828998",
     patreonEmote: "1067077634313433139",
 
   }
@@ -75,7 +75,7 @@ module.exports = {
     modRole: "648704988658532352",
     veriChannel: "1129792089387974787",
     reactionChannel: "1135578814605434902",
-    permShopChannel: "758252120582651915",
+    permShopChannel: "1156440903624433726",
     levelPing: "760565253305008168",
     welcomeChannel: "648703322278330368",
     plumLog: "1129793963709190204",
